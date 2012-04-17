@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="player_alliance_id">AllianceId</string>
+    <string name="player_alliance_name">AllianceName</string>
+    <string name="player_player_id">Id</string>
+    <string name="player_player_name">Name</string>
+    <string name="player_city_array">Cities</string>
+    <string name="player_city_id">i</string>
+    <string name="player_city_name">n</string>
+    <string name="player_city_x">x</string>
+    <string name="player_city_y">y</string>
+</resources>

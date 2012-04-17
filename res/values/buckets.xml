@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bucket_player_poll">PLAYER</string>
+    <string name="bucket_player_details">PLAYER_DETAILS</string>
+    <string name="bucket_version_poll">VERSION</string>
+    <string name="bucket_time_poll">TIME</string>
+    <string name="bucket_cat_poll">CAT</string>
+    <string name="bucket_server_poll">SERVER</string>
+    <string name="bucket_alliance_poll">ALLIANCE</string>
+    <string name="bucket_city_poll">CITY</string>
+    <string name="bucket_friend_invite_poll">FRIENDINV</string>
+    <string name="bucket_report_pull">REPORT</string>
+    <string name="bucket_chat">CHAT</string>
+    <string name="bucket_invite_poll">INV</string>
+    <string name="bucket_substitution_poll">SUBSTITUTION</string>
+    <string name="bucket_te_poll">TE</string>
+    <string name="bucket_quest_poll">QUEST</string>
+    <string name="bucket_visual_poll">VIS</string>
+</resources>

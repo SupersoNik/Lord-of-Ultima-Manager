@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alliance_id">id</string>
+    <string name="alliance_name">n</string>
+    <string name="alliance_member_array">m</string>
+    <string name="alliance_member_id">i</string>
+    <string name="alliance_member_name">n</string>
+    <string name="alliance_member_rank">ra</string>
+</resources>

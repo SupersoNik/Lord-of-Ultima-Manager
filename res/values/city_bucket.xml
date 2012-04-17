@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="city_name">n</string>
+    <string name="city_resources_array">r</string>
+    <string name="city_resources_type">i</string>
+    <string name="city_resources_max">m</string>
+    <string name="city_resources_amount">b</string>
+    <string name="city_resources_per">d</string>
+    <string name="city_town_hall_level">tl</string>
+    <string name="city_city_wall_level">wl</string>
+    <string name="city_troops_array">t</string>
+    <string name="city_troops_type">t</string>
+    <string name="city_trade_array">t</string>
+    <string name="city_trade_type">t</string>
+    <string name="city_trade_count">c</string>
+    <string name="city_trade_total">tc</string>
+    <string name="city_exchange_array">ti</string>
+    <string name="city_exchange_id">i</string>
+    <string name="city_exchange_city_id">c</string>
+    <string name="city_exchange_city_name">cn</string>
+    <string name="city_exchange_player_id">p</string>
+    <string name="city_exchange_player_name">pn</string>
+    <string name="city_exchange_alliance_id">a</string>
+    <string name="city_exchange_alliance_name">an</string>
+    <string name="city_exchange_resource_array">r</string>
+    <string name="city_exchange_resource_type">t</string>
+    <string name="city_exchange_resource_count">c</string>
+    <string name="city_recruitment_speed_array">rs</string>
+    <string name="city_recruitment_speed_type">t</string>
+    <string name="city_recruitment_speed_percent">p</string>
+    <string name="city_troops_amount">c</string>
+    <string name="city_troops_max">tc</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="visual_is_city">c</string>
+    <string name="visual_array">u</string>
+    <string name="visual_level">l</string>
+    <string name="visual_type">t</string>
+    <string name="visual_x">x</string>
+    <string name="visual_y">y</string>
+</resources>
