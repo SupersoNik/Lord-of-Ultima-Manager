@@ -1,12 +1,5 @@
 package com.avalutions.lou.manager.net;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
@@ -34,7 +27,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.avalutions.lou.manager.common.LouSession;
+import java.io.*;
+import java.util.List;
 
 public class UltimaClient {
 
@@ -76,7 +70,7 @@ public class UltimaClient {
         _client = new DefaultHttpClient(manager, parameters);
     }
     
-    private String getURL(LouSession session, String action) {
+    private String getURL(Session session, String action) {
         return "http://prodgame" + session.getGame() + ".lordofultima.com/" + session.getInstance() + "/Presentation/Service.svc/ajaxEndpoint/" + action;
     }
 
@@ -96,7 +90,7 @@ public class UltimaClient {
         return null;
     }
 
-    public String post(LouSession session, String action, JSONObject content) {
+    public String post(Session session, String action, JSONObject content) {
         final HttpPost httppost = new HttpPost(getURL(session, action));
         httppost.setHeader("Accept", "application/json");
         httppost.setHeader("Content-type", "application/json");

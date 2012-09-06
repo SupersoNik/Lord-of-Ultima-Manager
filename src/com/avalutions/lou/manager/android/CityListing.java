@@ -1,15 +1,5 @@
 package com.avalutions.lou.manager.android;
 
-import java.text.NumberFormat;
-
-import com.avalutions.lou.manager.R;
-import com.avalutions.lou.manager.android.adapters.CityAdapter;
-import com.avalutions.lou.manager.common.City;
-import com.avalutions.lou.manager.common.LouSession;
-import com.avalutions.lou.manager.common.Player;
-import com.avalutions.lou.manager.net.IPollHandler;
-import com.avalutions.lou.manager.net.SessionManager;
-
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,26 +7,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.avalutions.lou.manager.R;
+import com.avalutions.lou.manager.android.adapters.CityAdapter;
+import com.avalutions.lou.manager.models.City;
+import com.avalutions.lou.manager.models.Player;
+import com.avalutions.lou.manager.net.Session;
 
-public class CityListing extends ListActivity implements IPollHandler {
-    private SessionManager world;
-    private LouSession session;
-    private final ProgressDialog dialog = new ProgressDialog(CityListing.this);
+import java.text.NumberFormat;
+
+public class CityListing extends ListActivity {
+    private ProgressDialog dialog;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.worlddetails);
-        
-        Intent intent = this.getIntent();
-        this.session = (LouSession)intent.getSerializableExtra("session");
-        this.world = SessionManager.getInstance(session);
 
-        world.setPollHandler(this);
-        world.setContext(this);
+        dialog = new ProgressDialog(this);
         
-        if(world.getPlayer().getCities() == null || world.getPlayer().getCities().size() <= 0) {
+        if(Session.getActive().getWorld().getPlayer().getCities() == null || Session.getActive().getWorld().getPlayer().getCities().length <= 0) {
             dialog.setMessage("Loading cities...");
             dialog.show();
         }
@@ -48,28 +38,26 @@ public class CityListing extends ListActivity implements IPollHandler {
         super.onListItemClick(l, v, position, id);
 
         City city = (City)this.getListAdapter().getItem(position);
+        Session.getActive().getWorld().setCurrentCity(city);
 
-        this.world.changeCity(city);
-
-        Intent intent = new Intent(getBaseContext(), CityDetails.class);
-        intent.putExtra("session", this.session);
+        Intent intent = new Intent(this, CityDetails.class);
         startActivity(intent);
         
     }
     
     private void updateDetails() {
         NumberFormat formatter = NumberFormat.getIntegerInstance();
-        Player player = world.getPlayer();
+        Player player = Session.getActive().getWorld().getPlayer();
         
         TextView tvPlayer = (TextView)this.findViewById(R.id.txtPlayerName);
         tvPlayer.setText(player.getName());
         TextView tvScore = (TextView)this.findViewById(R.id.txtPlayerScore);
         tvScore.setText(formatter.format(player.getScore()));
-        CityAdapter adapter = new CityAdapter(this, player.getCities().toArray(new City[player.getCities().size()]));
+        CityAdapter adapter = new CityAdapter(this, player.getCities());
         setListAdapter(adapter);
-        if(player.getAlliance() != null) {
+        if(Session.getActive().getWorld().getAlliance() != null) {
             TextView tvAlliance = (TextView)this.findViewById(R.id.txtAlliance);
-            tvAlliance.setText(player.getAlliance().getName());
+            tvAlliance.setText(Session.getActive().getWorld().getAlliance().getName());
         }
     }
 

@@ -1,5 +1,9 @@
 package com.avalutions.lou.manager.common;
 
+import com.avalutions.lou.manager.models.City;
+import com.avalutions.lou.manager.models.MeasurableUnit;
+import com.avalutions.lou.manager.models.Resource;
+
 public class TradeRequestItem {
     private City city;
     private MeasurableUnit<Resource> totalAvailable;

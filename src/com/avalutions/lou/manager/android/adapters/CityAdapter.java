@@ -1,20 +1,19 @@
 package com.avalutions.lou.manager.android.adapters;
 
-import com.avalutions.lou.manager.R;
-import com.avalutions.lou.manager.common.City;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.avalutions.lou.manager.R;
+import com.avalutions.lou.manager.models.CityHeader;
 
-public class CityAdapter extends ArrayAdapter<City> {
+public class CityAdapter extends ArrayAdapter<CityHeader> {
     private final Activity context;
-    private final City[] cities;
+    private final CityHeader[] cities;
 
-    public CityAdapter(Activity context, City[] cities) {
+    public CityAdapter(Activity context, CityHeader[] cities) {
         super(context, R.layout.worlditem, cities);
         this.context = context;
         this.cities = cities;

@@ -1,23 +1,17 @@
 package com.avalutions.lou.manager.android;
 
-import java.text.NumberFormat;
-
-import com.avalutions.lou.manager.R;
-import com.avalutions.lou.manager.common.City;
-import com.avalutions.lou.manager.common.CityResource;
-import com.avalutions.lou.manager.common.LouSession;
-import com.avalutions.lou.manager.net.IPollHandler;
-import com.avalutions.lou.manager.net.SessionManager;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import com.avalutions.lou.manager.R;
+import com.avalutions.lou.manager.models.City;
+import com.avalutions.lou.manager.models.CityResource;
+import com.avalutions.lou.manager.net.Session;
 
-public class CityTrade extends Activity implements IPollHandler {
-	private LouSession session;
-	private SessionManager world;
+import java.text.NumberFormat;
+
+public class CityTrade extends Activity {
     private final ProgressDialog dialog = new ProgressDialog(CityTrade.this);
 
 	@Override
@@ -25,15 +19,11 @@ public class CityTrade extends Activity implements IPollHandler {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.city_trade);
-
-		Intent intent = this.getIntent();
-		this.session = (LouSession) intent.getSerializableExtra("session");
-		this.world = SessionManager.getInstance(session);
-
-        world.setPollHandler(this);
-        world.setContext(this);
         
-        if(((City)session.getCurrentCity()).getResources() == null) {
+        if(Session.getActive() != null &&
+                Session.getActive().getWorld() != null &&
+                Session.getActive().getWorld().getCurrentCity() != null &&
+                Session.getActive().getWorld().getCurrentCity().getResources() == null) {
             dialog.setMessage("Loading Resources...");
             dialog.show();
         }
@@ -41,7 +31,7 @@ public class CityTrade extends Activity implements IPollHandler {
 	}
 	
 	private void updateDetails() {
-        City city = (City)session.getCurrentCity();
+        City city = Session.getActive().getWorld().getCurrentCity();
         NumberFormat formatter = NumberFormat.getIntegerInstance();
         TextView tv = null;
         TextView tvPer = null;
@@ -87,14 +77,4 @@ public class CityTrade extends Activity implements IPollHandler {
             tvCap.setText(formatter.format(resource.getCapacity()));
         }
 	}
-
-    public void BucketChanged(String bucket) {
-        if(bucket == getString(R.string.bucket_city_poll)) {
-            if (this.dialog.isShowing()) {
-                this.dialog.dismiss();
-            }
-            
-            updateDetails();
-        }
-    }
 }

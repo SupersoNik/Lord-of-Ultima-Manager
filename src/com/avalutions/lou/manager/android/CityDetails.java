@@ -1,11 +1,5 @@
 package com.avalutions.lou.manager.android;
 
-import com.avalutions.lou.manager.R;
-import com.avalutions.lou.manager.common.City;
-import com.avalutions.lou.manager.common.LouSession;
-import com.avalutions.lou.manager.net.IPollHandler;
-import com.avalutions.lou.manager.net.SessionManager;
-
 import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Context;
@@ -14,14 +8,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
+import com.avalutions.lou.manager.R;
+import com.avalutions.lou.manager.models.City;
+import com.avalutions.lou.manager.net.Session;
 
-public class CityDetails extends TabActivity implements IPollHandler {
+public class CityDetails extends TabActivity {
 	private TabHost mTabHost;
-	private LouSession session;
-	private SessionManager world;
-    private final ProgressDialog dialog = new ProgressDialog(CityDetails.this);
+    private ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +24,9 @@ public class CityDetails extends TabActivity implements IPollHandler {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.citydetails);
 
-		Intent intent = this.getIntent();
-		session = (LouSession) intent.getSerializableExtra("session");
-		world = SessionManager.getInstance(session);
-
-		world.setPollHandler(this);
-		world.setContext(this);
+        dialog = new ProgressDialog(this);
 		
-		if(((City)session.getCurrentCity()).getResources() == null) {
+		if((Session.getActive().getWorld().getCurrentCity()).getResources() == null) {
             dialog.setMessage("Loading city...");
             dialog.show();
 		}
@@ -45,7 +35,6 @@ public class CityDetails extends TabActivity implements IPollHandler {
 
 	private void setupTab(Class<?> cls, final String tag) {
 		Intent intent = new Intent().setClass(this, cls);
-        intent.putExtra("session", this.session);
 
 		View tabview = createTabView(mTabHost.getContext(), tag);
 		TabSpec setContent = mTabHost.newTabSpec(tag).setIndicator(tabview)
@@ -62,13 +51,13 @@ public class CityDetails extends TabActivity implements IPollHandler {
 	}
 	
 	private void updateDetails() {
-        City city = (City)session.getCurrentCity();
+        City city = Session.getActive().getWorld().getCurrentCity();
         TextView tv = (TextView)findViewById(R.id.city_details_city_name);
         tv.setText(city.getName());
 	}
 	
 	private void updatePollDetails() {
-        City city = (City)session.getCurrentCity();
+        City city = Session.getActive().getWorld().getCurrentCity();
         TextView tv = (TextView)findViewById(R.id.city_details_city_wall);
         tv.setText(String.valueOf(city.getCityWall().getLevel()));
         tv = (TextView)findViewById(R.id.city_details_town_hall);
@@ -80,14 +69,4 @@ public class CityDetails extends TabActivity implements IPollHandler {
             setupTab(CityTroops.class, "Troops");
         }
 	}
-
-    public void BucketChanged(String bucket) {
-        if(bucket == getString(R.string.bucket_city_poll)) {
-            if (this.dialog.isShowing()) {
-                this.dialog.dismiss();
-            }
-            
-            updatePollDetails();
-        }
-    }
 }
