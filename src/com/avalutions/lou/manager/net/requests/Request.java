@@ -30,6 +30,7 @@ abstract class Request extends AsyncTask<Void, Void, String> {
             }
             request.put("session", session.getSessionId());
             String response = UltimaClient.getInstance().post(session, getAction(), request);
+            Log.v("JSON Requests", response);
             return response;
         } catch (JSONException e) {
             Log.e("Request", "Error parsing response.", e);

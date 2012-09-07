@@ -14,9 +14,13 @@ public class SessionListing extends ListActivity {
     private ProgressDialog progressDialog;
     private AsyncTask<Session, Void, Void> activationTask = new AsyncTask<Session, Void, Void>() {
         @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(SessionListing.this, "", "Activating...");
+        }
+
+        @Override
         protected Void doInBackground(Session... sessions) {
             sessions[0].activate();
-            progressDialog = ProgressDialog.show(SessionListing.this, "", "Activating...");
             return null;
         }
 

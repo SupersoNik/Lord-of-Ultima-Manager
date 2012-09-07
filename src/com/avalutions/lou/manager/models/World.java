@@ -16,6 +16,10 @@ public class World {
     private Journal journal;
     private Mailbox mailbox;
 
+    public World() {
+
+    }
+
     public interface PlayerUpdatedHandler {
         public void onPlayerUpdated();
     }

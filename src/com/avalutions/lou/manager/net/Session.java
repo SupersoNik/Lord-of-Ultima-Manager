@@ -1,5 +1,6 @@
 package com.avalutions.lou.manager.net;
 
+import android.util.Log;
 import com.avalutions.lou.manager.models.World;
 import com.avalutions.lou.manager.net.requests.Reset;
 import org.apache.http.message.BasicNameValuePair;
@@ -34,8 +35,8 @@ public class Session implements Reset.ResetCompleteHandler {
     public static boolean login(String username, String password) {
         //authentication block:
         List<BasicNameValuePair> nvps = new ArrayList<BasicNameValuePair>();
-        nvps.add(new BasicNameValuePair("mail", "bennyandlinds@gmail.com"));
-        nvps.add(new BasicNameValuePair("password", "Laps1414"));
+        nvps.add(new BasicNameValuePair("mail", username));
+        nvps.add(new BasicNameValuePair("password", password));
 
         UltimaClient.getInstance().post("https://www.lordofultima.com/en/user/login", nvps);
 
@@ -82,12 +83,13 @@ public class Session implements Reset.ResetCompleteHandler {
         return world;
     }
 
-    public void setWorld() {
-        world = world;
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     private Session(String sessionId) {
         this.sessionId = sessionId;
+        world = new World();
     }
 
     public String getSessionId() {
@@ -142,11 +144,13 @@ public class Session implements Reset.ResetCompleteHandler {
 
     @Override
     public void onResetComplete(boolean result) {
+        Log.d("SESSION", "Reset: " + String.valueOf(result));
         if(result) {
             if(activeSession != null) {
                 activeSession.deactivate();
             }
             activeSession = this;
+            //TODO: Start Polling
         }
     }
 }

@@ -26,11 +26,12 @@ public class CityListing extends ListActivity {
 
         dialog = new ProgressDialog(this);
         
-        if(Session.getActive().getWorld().getPlayer().getCities() == null || Session.getActive().getWorld().getPlayer().getCities().length <= 0) {
+        if(Session.getActive().getWorld().getPlayer() == null ||
+                Session.getActive().getWorld().getPlayer().getCities() == null ||
+                Session.getActive().getWorld().getPlayer().getCities().length <= 0) {
             dialog.setMessage("Loading cities...");
             dialog.show();
         }
-        updateDetails();
     }
     
     @Override

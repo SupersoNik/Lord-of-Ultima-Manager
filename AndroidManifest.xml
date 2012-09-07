@@ -13,7 +13,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".android.WorldListing" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
+        <activity android:name=".android.SessionListing" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
         <activity android:name=".android.CityListing" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
         <activity android:name=".android.CityDetails" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
         <activity android:name=".android.CityTrade" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
