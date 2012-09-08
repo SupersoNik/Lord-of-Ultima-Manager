@@ -1,7 +1,10 @@
 package com.avalutions.lou.manager.net;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import com.avalutions.lou.manager.models.World;
+import com.avalutions.lou.manager.net.requests.Poll;
 import com.avalutions.lou.manager.net.requests.Reset;
 import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
@@ -11,6 +14,8 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +30,15 @@ public class Session implements Reset.ResetCompleteHandler {
 
     private static Session[] sessions;
     private static Session activeSession;
+    private static SessionActivationHandler activationHandler;
 
+    public interface SessionActivationHandler {
+        public void onSessionActivated();
+    }
+
+    public synchronized static void setActivationHandler(SessionActivationHandler handler) {
+        activationHandler = handler;
+    }
     public static Session[] getSessions() {
         return sessions;
     }
@@ -78,13 +91,10 @@ public class Session implements Reset.ResetCompleteHandler {
     private String worldId;
     private String region;
     private World world;
+    private final Timer timer = new Timer();
 
     public World getWorld() {
         return world;
-    }
-
-    public void setWorld(World world) {
-        this.world = world;
     }
 
     private Session(String sessionId) {
@@ -133,9 +143,13 @@ public class Session implements Reset.ResetCompleteHandler {
     }
 
     public void activate() {
-        Reset reset = new Reset();
+        Reset reset = new Reset(this);
         reset.setResetCompleteHandler(this);
         reset.execute();
+        if(activeSession != null) {
+            activeSession.deactivate();
+        }
+        activeSession = this;
     }
 
     private void deactivate() {
@@ -145,12 +159,36 @@ public class Session implements Reset.ResetCompleteHandler {
     @Override
     public void onResetComplete(boolean result) {
         Log.d("SESSION", "Reset: " + String.valueOf(result));
-        if(result) {
-            if(activeSession != null) {
-                activeSession.deactivate();
-            }
-            activeSession = this;
-            //TODO: Start Polling
+        if(activationHandler != null) {
+            activationHandler.onSessionActivated();
         }
+
+        timer.schedule(pollHandler, 0, 2000);
     }
+
+    private long lastcall = System.currentTimeMillis();
+    private long lastcompleted = System.currentTimeMillis();
+    private int sequence = 1;
+    private TimerTask pollHandler = new TimerTask() {
+        @Override
+        public void run() {
+            synchronized (Session.this) {
+                if(lastcall <= lastcompleted) {
+                    Poll poll = new Poll(sequence);
+                    poll.setPollCompletedHandler(handler);
+                    poll.execute();
+
+                    lastcall = System.currentTimeMillis();
+                    sequence++;
+                }
+            }
+        }
+    };
+
+    private Poll.PollCompletedHandler handler = new Poll.PollCompletedHandler() {
+        @Override
+        public void onPollCompleted() {
+            lastcompleted = System.currentTimeMillis();
+        }
+    };
 }

@@ -15,9 +15,18 @@ import java.util.Map;
 
 public class Poll extends Request {
     private final int sequence;
+    private PollCompletedHandler handler;
+
+    public interface PollCompletedHandler {
+        public void onPollCompleted();
+    }
 
     public Poll(int sequence) {
         this.sequence = sequence;
+    }
+
+    public void setPollCompletedHandler(PollCompletedHandler handler) {
+        this.handler = handler;
     }
 
     @Override
@@ -33,25 +42,34 @@ public class Poll extends Request {
         try {
             JSONArray result = new JSONArray(jsonObject);
             for (int i = 0; i < result.length(); i++) {
-                JSONObject pair = result.getJSONObject(i);
-                String key = pair.getString("C");
-                JSONObject value = pair.getJSONObject("D");
+                String key = null;
+                try {
+                    JSONObject pair = result.getJSONObject(i);
+                    key = pair.getString("C");
+                    JSONObject value = pair.getJSONObject("D");
 
-                if (key == "PLAYER") {
-                    Player player = Player.fromJSON(value);
-                    Session.getActive().getWorld().setPlayer(player);
-                } else if (key == "CITY") {
-                    City city = City.fromJSON(value);
-                    Session.getActive().getWorld().setCurrentCity(city);
-                } else if (key == "ALLIANCE") {
-                    Alliance alliance = Alliance.fromJSON(value);
-                    Session.getActive().getWorld().setAlliance(alliance);
-                } else if (key == "VIS") {
+                    if (key.equals("PLAYER")) {
+                        Player player = Player.fromJSON(value);
+                        Session.getActive().getWorld().setPlayer(player);
+                    } else if (key.equals("CITY")) {
+                        City city = City.fromJSON(value);
+                        Session.getActive().getWorld().setCurrentCity(city);
+                    } else if (key.equals("ALLIANCE")) {
+                        Alliance alliance = Alliance.fromJSON(value);
+                        Session.getActive().getWorld().setAlliance(alliance);
+                    } else if (key.equals("VIS")) {
 
+                    }
+                } catch(JSONException e) {
+                    Log.e("Poll item", "Problem with " + key, e);
                 }
             }
         } catch (JSONException e) {
             Log.e("Poll", "Problem with poll JSON", e);
+        } finally {
+            if(handler != null) {
+                handler.onPollCompleted();
+            }
         }
     }
 

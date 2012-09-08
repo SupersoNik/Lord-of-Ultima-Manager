@@ -11,13 +11,26 @@ import com.avalutions.lou.manager.R;
 import com.avalutions.lou.manager.android.adapters.CityAdapter;
 import com.avalutions.lou.manager.models.City;
 import com.avalutions.lou.manager.models.Player;
+import com.avalutions.lou.manager.models.World;
 import com.avalutions.lou.manager.net.Session;
 
 import java.text.NumberFormat;
 
 public class CityListing extends ListActivity {
     private ProgressDialog dialog;
-    
+    private Session.SessionActivationHandler activationHandler = new Session.SessionActivationHandler() {
+        @Override
+        public void onSessionActivated() {
+            Session.getActive().getWorld().setWorldChangedHandler(CityListing.this.worldChangedHandler);
+        }
+    };
+    private World.WorldChangedHandler worldChangedHandler = new World.WorldChangedHandler() {
+        @Override
+        public void onWorldChanged(World.WorldChange whatChanged) {
+            CityListing.this.updateDetails();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -25,12 +38,15 @@ public class CityListing extends ListActivity {
         setContentView(R.layout.worlddetails);
 
         dialog = new ProgressDialog(this);
-        
+        Session.setActivationHandler(activationHandler);
+
         if(Session.getActive().getWorld().getPlayer() == null ||
                 Session.getActive().getWorld().getPlayer().getCities() == null ||
                 Session.getActive().getWorld().getPlayer().getCities().length <= 0) {
             dialog.setMessage("Loading cities...");
             dialog.show();
+        } else {
+            updateDetails();
         }
     }
     

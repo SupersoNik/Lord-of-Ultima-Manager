@@ -16,20 +16,22 @@ public class World {
     private Journal journal;
     private Mailbox mailbox;
 
+
     public World() {
-
     }
 
-    public interface PlayerUpdatedHandler {
-        public void onPlayerUpdated();
+    public enum WorldChange { Player, City, Quest, Journal, Alliance, Mailbox, Chat }
+    private void onWorldChanged(WorldChange whatChanged) {
+        if(handler != null) {
+            handler.onWorldChanged(whatChanged);
+        }
     }
-
-    public interface AllianceUpdatedHandler {
-        public void onAllianceUpdated();
+    public void setWorldChangedHandler(WorldChangedHandler handler) {
+        handler = handler;
     }
-
-    public interface CityChangedHandler {
-        public void onCityChanged();
+    private WorldChangedHandler handler;
+    public interface WorldChangedHandler {
+        public void onWorldChanged(WorldChange whatChanged);
     }
 
     public String getId() {
@@ -46,6 +48,7 @@ public class World {
 
     public void setPlayer(Player player) {
         this.player = player;
+        onWorldChanged(WorldChange.Player);
     }
 
     public Alliance getAlliance() {
@@ -54,6 +57,7 @@ public class World {
 
     public void setAlliance(Alliance alliance) {
         this.alliance = alliance;
+        onWorldChanged(WorldChange.Alliance);
     }
 
     public QuestLog getQuests() {
@@ -62,6 +66,7 @@ public class World {
 
     public void setQuests(QuestLog quests) {
         this.quests = quests;
+        onWorldChanged(WorldChange.Quest);
     }
 
     public Journal getJournal() {
@@ -70,6 +75,7 @@ public class World {
 
     public void setJournal(Journal journal) {
         this.journal = journal;
+        onWorldChanged(WorldChange.Journal);
     }
 
     public Mailbox getMailbox() {
@@ -78,6 +84,7 @@ public class World {
 
     public void setMailbox(Mailbox mailbox) {
         this.mailbox = mailbox;
+        onWorldChanged(WorldChange.Mailbox);
     }
 
     public City getCurrentCity() {
@@ -86,5 +93,6 @@ public class World {
 
     public void setCurrentCity(City currentCity) {
         this.currentCity = currentCity;
+        onWorldChanged(WorldChange.City);
     }
 }

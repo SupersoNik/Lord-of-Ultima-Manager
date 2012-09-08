@@ -16,11 +16,14 @@ abstract class Request extends AsyncTask<Void, Void, String> {
     protected Map<String, String> getRequestData() {
         return null;
     }
+    protected Session getSession() {
+        return Session.getActive();
+    }
 
     @Override
     protected final String doInBackground(Void... voids) {
         JSONObject request = new JSONObject();
-        Session session = Session.getActive();
+        Session session = getSession();
         try {
             Map<String, String> data = getRequestData();
             if(data != null) {
@@ -29,8 +32,9 @@ abstract class Request extends AsyncTask<Void, Void, String> {
                 }
             }
             request.put("session", session.getSessionId());
+            Log.v("JSON>>", request.toString());
             String response = UltimaClient.getInstance().post(session, getAction(), request);
-            Log.v("JSON Requests", response);
+            Log.v("JSON<<", response);
             return response;
         } catch (JSONException e) {
             Log.e("Request", "Error parsing response.", e);
