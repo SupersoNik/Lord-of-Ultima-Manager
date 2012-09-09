@@ -21,11 +21,14 @@ public class SessionAdapter extends ArrayAdapter<Session> {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = context.getLayoutInflater();
+        Session session = sessions[position];
+
 		View rowView = inflater.inflate(R.layout.worlditem, null, true);
+
 		TextView textView = (TextView) rowView.findViewById(R.id.txtWorldNumber);
         TextView txtRegion = (TextView) rowView.findViewById(R.id.txtWorldRegion);
-		textView.setText(sessions[position].getWorldId());
-		txtRegion.setText(sessions[position].getRegion());
+		textView.setText(session.worldId);
+		txtRegion.setText(session.region);
 
 		return rowView;
 	}

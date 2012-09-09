@@ -21,9 +21,9 @@ public class CityTrade extends Activity {
 		this.setContentView(R.layout.city_trade);
         
         if(Session.getActive() != null &&
-                Session.getActive().getWorld() != null &&
-                Session.getActive().getWorld().getCurrentCity() != null &&
-                Session.getActive().getWorld().getCurrentCity().getResources() == null) {
+                Session.getActive().world != null &&
+                Session.getActive().world.getCurrentCity() != null &&
+                Session.getActive().world.getCurrentCity().getResources() == null) {
             dialog.setMessage("Loading Resources...");
             dialog.show();
         }
@@ -31,7 +31,7 @@ public class CityTrade extends Activity {
 	}
 	
 	private void updateDetails() {
-        City city = Session.getActive().getWorld().getCurrentCity();
+        City city = Session.getActive().world.getCurrentCity();
         NumberFormat formatter = NumberFormat.getIntegerInstance();
         TextView tv = null;
         TextView tvPer = null;

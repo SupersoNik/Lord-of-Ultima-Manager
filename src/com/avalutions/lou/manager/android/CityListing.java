@@ -21,7 +21,7 @@ public class CityListing extends ListActivity {
     private Session.SessionActivationHandler activationHandler = new Session.SessionActivationHandler() {
         @Override
         public void onSessionActivated() {
-            Session.getActive().getWorld().setWorldChangedHandler(CityListing.this.worldChangedHandler);
+            Session.getActive().world.setWorldChangedHandler(CityListing.this.worldChangedHandler);
         }
     };
     private World.WorldChangedHandler worldChangedHandler = new World.WorldChangedHandler() {
@@ -40,9 +40,9 @@ public class CityListing extends ListActivity {
         dialog = new ProgressDialog(this);
         Session.setActivationHandler(activationHandler);
 
-        if(Session.getActive().getWorld().getPlayer() == null ||
-                Session.getActive().getWorld().getPlayer().getCities() == null ||
-                Session.getActive().getWorld().getPlayer().getCities().length <= 0) {
+        if(Session.getActive().world.getPlayer() == null ||
+                Session.getActive().world.getPlayer().getCities() == null ||
+                Session.getActive().world.getPlayer().getCities().length <= 0) {
             dialog.setMessage("Loading cities...");
             dialog.show();
         } else {
@@ -55,7 +55,7 @@ public class CityListing extends ListActivity {
         super.onListItemClick(l, v, position, id);
 
         City city = (City)this.getListAdapter().getItem(position);
-        Session.getActive().getWorld().setCurrentCity(city);
+        Session.getActive().world.setCurrentCity(city);
 
         Intent intent = new Intent(this, CityDetails.class);
         startActivity(intent);
@@ -64,7 +64,7 @@ public class CityListing extends ListActivity {
     
     private void updateDetails() {
         NumberFormat formatter = NumberFormat.getIntegerInstance();
-        Player player = Session.getActive().getWorld().getPlayer();
+        Player player = Session.getActive().world.getPlayer();
         
         TextView tvPlayer = (TextView)this.findViewById(R.id.txtPlayerName);
         tvPlayer.setText(player.getName());
@@ -72,9 +72,9 @@ public class CityListing extends ListActivity {
         tvScore.setText(formatter.format(player.getScore()));
         CityAdapter adapter = new CityAdapter(this, player.getCities());
         setListAdapter(adapter);
-        if(Session.getActive().getWorld().getAlliance() != null) {
+        if(Session.getActive().world.getAlliance() != null) {
             TextView tvAlliance = (TextView)this.findViewById(R.id.txtAlliance);
-            tvAlliance.setText(Session.getActive().getWorld().getAlliance().getName());
+            tvAlliance.setText(Session.getActive().world.getAlliance().getName());
         }
     }
 

@@ -1,11 +1,8 @@
 package com.avalutions.lou.manager.net;
 
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import com.avalutions.lou.manager.models.World;
-import com.avalutions.lou.manager.net.requests.Poll;
-import com.avalutions.lou.manager.net.requests.Reset;
+import com.avalutions.lou.manager.net.commands.Poll;
+import com.avalutions.lou.manager.net.commands.Reset;
 import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,7 +23,7 @@ import java.util.regex.Pattern;
  * Time: 2:21 AM
  * To change this template use File | Settings | File Templates.
  */
-public class Session implements Reset.ResetCompleteHandler {
+public class Session {
 
     private static Session[] sessions;
     private static Session activeSession;
@@ -69,14 +66,14 @@ public class Session implements Reset.ResetCompleteHandler {
                 Element input = element.select("input[type=hidden]").first();
                 String sessionId = input.attr("value");
                 Session session = new Session(sessionId);
-                session.setGame(matcher.group(1));
-                session.setInstance(matcher.group(2));
+                session.game = matcher.group(1);
+                session.instance = matcher.group(2);
 
                 String button = element.select("input[type=submit]").first().attr("value");
                 worldMatcher = worldPattern.matcher(button);
                 worldMatcher.matches();
-                session.setWorldId(worldMatcher.group(1));
-                session.setRegion(worldMatcher.group(2));
+                session.worldId = worldMatcher.group(1);
+                session.region = worldMatcher.group(2);
 
                 sessionList.add(session);
             }
@@ -85,85 +82,37 @@ public class Session implements Reset.ResetCompleteHandler {
         return sessionList.size() > 0;
     }
 
-    private String sessionId;
-    private String game;
-    private String instance;
-    private String worldId;
-    private String region;
-    private World world;
+    public String sessionId;
+    public String game;
+    public String instance;
+    public String worldId;
+    public String region;
+    public World world;
     private final Timer timer = new Timer();
-
-    public World getWorld() {
-        return world;
-    }
 
     private Session(String sessionId) {
         this.sessionId = sessionId;
         world = new World();
     }
 
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public String getGame() {
-        return game;
-    }
-
-    public void setGame(String game) {
-        this.game = game;
-    }
-
-    public String getInstance() {
-        return instance;
-    }
-
-    public void setInstance(String instance) {
-        this.instance = instance;
-    }
-
-    public String getWorldId() {
-        return worldId;
-    }
-
-    public void setWorldId(String worldId) {
-        this.worldId = worldId;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
     public void activate() {
         Reset reset = new Reset(this);
-        reset.setResetCompleteHandler(this);
-        reset.execute();
+        reset.run();
+
         if(activeSession != null) {
             activeSession.deactivate();
         }
         activeSession = this;
-    }
 
-    private void deactivate() {
-
-    }
-
-    @Override
-    public void onResetComplete(boolean result) {
-        Log.d("SESSION", "Reset: " + String.valueOf(result));
         if(activationHandler != null) {
             activationHandler.onSessionActivated();
         }
 
         timer.schedule(pollHandler, 0, 2000);
+    }
+
+    private void deactivate() {
+
     }
 
     private long lastcall = System.currentTimeMillis();
@@ -175,20 +124,13 @@ public class Session implements Reset.ResetCompleteHandler {
             synchronized (Session.this) {
                 if(lastcall <= lastcompleted) {
                     Poll poll = new Poll(sequence);
-                    poll.setPollCompletedHandler(handler);
-                    poll.execute();
-
                     lastcall = System.currentTimeMillis();
+                    poll.run();
+                    lastcompleted = System.currentTimeMillis();
+
                     sequence++;
                 }
             }
-        }
-    };
-
-    private Poll.PollCompletedHandler handler = new Poll.PollCompletedHandler() {
-        @Override
-        public void onPollCompleted() {
-            lastcompleted = System.currentTimeMillis();
         }
     };
 }

@@ -26,7 +26,7 @@ public class CityDetails extends TabActivity {
 
         dialog = new ProgressDialog(this);
 		
-		if((Session.getActive().getWorld().getCurrentCity()).getResources() == null) {
+		if((Session.getActive().world.getCurrentCity()).getResources() == null) {
             dialog.setMessage("Loading city...");
             dialog.show();
 		}
@@ -51,13 +51,13 @@ public class CityDetails extends TabActivity {
 	}
 	
 	private void updateDetails() {
-        City city = Session.getActive().getWorld().getCurrentCity();
+        City city = Session.getActive().world.getCurrentCity();
         TextView tv = (TextView)findViewById(R.id.city_details_city_name);
         tv.setText(city.getName());
 	}
 	
 	private void updatePollDetails() {
-        City city = Session.getActive().getWorld().getCurrentCity();
+        City city = Session.getActive().world.getCurrentCity();
         TextView tv = (TextView)findViewById(R.id.city_details_city_wall);
         tv.setText(String.valueOf(city.getCityWall().getLevel()));
         tv = (TextView)findViewById(R.id.city_details_town_hall);

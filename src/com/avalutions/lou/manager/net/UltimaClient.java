@@ -71,7 +71,7 @@ public class UltimaClient {
     }
     
     private String getURL(Session session, String action) {
-        return "http://prodgame" + session.getGame() + ".lordofultima.com/" + session.getInstance() + "/Presentation/Service.svc/ajaxEndpoint/" + action;
+        return "http://prodgame" + session.game + ".lordofultima.com/" + session.instance + "/Presentation/Service.svc/ajaxEndpoint/" + action;
     }
 
     public String get(String url) {
@@ -90,12 +90,12 @@ public class UltimaClient {
         return null;
     }
 
-    public String post(Session session, String action, JSONObject content) {
+    public String post(Session session, String action, String content) {
         final HttpPost httppost = new HttpPost(getURL(session, action));
         httppost.setHeader("Accept", "application/json");
         httppost.setHeader("Content-type", "application/json");
         try {
-            httppost.setEntity(new StringEntity(content.toString()));
+            httppost.setEntity(new StringEntity(content));
         } catch (UnsupportedEncodingException e1) {
             e1.printStackTrace();
         }
