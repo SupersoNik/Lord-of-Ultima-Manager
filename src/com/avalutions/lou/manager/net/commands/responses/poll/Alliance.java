@@ -1,16 +1,26 @@
 package com.avalutions.lou.manager.net.commands.responses.poll;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Alliance {
     public int v;
     public int id;
-    public String n;
-    public String t;
-    public String a;
-    public String d;
-    public List<Rank> r;
-    public List<Member> m;
-    public int ia;
-    public int oa;
+    @JsonProperty("n")
+    public String name;
+    @JsonProperty("t")
+    public String abbreviation;
+    @JsonProperty("a")
+    public String messageOfTheDay;
+    @JsonProperty("d")
+    public String description;
+    @JsonProperty("r")
+    public List<Rank> ranks;
+    @JsonProperty("m")
+    public List<Member> members;
+    @JsonProperty("ia")
+    public int incomingAttacks;
+    @JsonProperty("oa")
+    public int outgoingAttacks;
 }

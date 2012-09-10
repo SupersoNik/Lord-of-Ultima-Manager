@@ -1,7 +1,12 @@
 package com.avalutions.lou.manager.net.commands.responses.poll;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UnitGroup {
-    public int t;
-    public int c;
-    public int tc;
+    @JsonProperty("t")
+    public int type;
+    @JsonProperty("c")
+    public int count;
+    @JsonProperty("tc")
+    public int totalCount;
 }

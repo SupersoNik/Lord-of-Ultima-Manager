@@ -1,11 +1,18 @@
 package com.avalutions.lou.manager.net.commands.responses.poll;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Player {
-    public int v;
+    @JsonProperty("a")
     public int a;
-    public Unit g;
-    public Unit m;
-    public List<PlayerCity> c;
+    @JsonProperty("g")
+    public Unit gold;
+    @JsonProperty("m")
+    public Unit mana;
+    @JsonProperty("c")
+    public List<PlayerCity> cities;
+    @JsonProperty("cg")
+    public List<CityGroup> cityGroups;
 }

@@ -1,6 +1,10 @@
 package com.avalutions.lou.manager.net.commands.responses.poll;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class RecruitmentSpeed {
-    public int t;
-    public int p;
+    @JsonProperty("t")
+    public int type;
+    @JsonProperty("p")
+    public int percent;
 }

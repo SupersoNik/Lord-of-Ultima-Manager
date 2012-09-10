@@ -27,7 +27,7 @@ public class World {
         }
     }
     public void setWorldChangedHandler(WorldChangedHandler handler) {
-        handler = handler;
+        this.handler = handler;
     }
     private WorldChangedHandler handler;
     public interface WorldChangedHandler {

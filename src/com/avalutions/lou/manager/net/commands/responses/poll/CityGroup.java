@@ -1,9 +1,14 @@
 package com.avalutions.lou.manager.net.commands.responses.poll;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class CityGroup {
-    public int i;
-    public String n;
-    public List<Integer> c;
+    @JsonProperty("i")
+    public int id;
+    @JsonProperty("n")
+    public String name;
+    @JsonProperty("c")
+    public List<Integer> cities;
 }

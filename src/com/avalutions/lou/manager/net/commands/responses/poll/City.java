@@ -1,5 +1,7 @@
 package com.avalutions.lou.manager.net.commands.responses.poll;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 /**
@@ -10,19 +12,34 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class City {
-    public String n;
-    public int uc;
-    public int ul;
-    public int tl;
-    public int wl;
-    public float g;
-    public Unit r;
-    public List<BuildingQueueItem> q;
-    public List<TroopQueueItem> uq;
-    public List<Army> uo;
-    public List<UnitGroup> u;
-    public List<UnitGroup> t;
-    public List<Merchant> to;
-    public List<Merchant> ti;
+    @JsonProperty("n")
+    public String name;
+    @JsonProperty("uc")
+    public int unitCount;
+    @JsonProperty("ul")
+    public int unitLimit;
+    @JsonProperty("tl")
+    public int townHallLevel;
+    @JsonProperty("wl")
+    public int wallLevel;
+    @JsonProperty("g")
+    public float goldIncrease;
+    @JsonProperty("r")
+    public List<Unit> resources;
+    @JsonProperty("q")
+    public List<BuildingQueueItem> buildingQueue;
+    @JsonProperty("uq")
+    public List<TroopQueueItem> unitQueue;
+    @JsonProperty("uo")
+    public List<Army> outgoingUnits;
+    @JsonProperty("u")
+    public List<UnitGroup> units;
+    @JsonProperty("t")
+    public List<UnitGroup> tradeUnits;
+    @JsonProperty("to")
+    public List<Merchant> outgoingTrades;
+    @JsonProperty("ti")
+    public List<Merchant> incomingTrades;
+    @JsonProperty("rs")
     public List<RecruitmentSpeed> rs;
 }

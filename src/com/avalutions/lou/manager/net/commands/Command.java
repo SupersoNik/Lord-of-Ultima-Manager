@@ -13,7 +13,7 @@ import java.io.IOException;
  * Time: 2:01 PM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class Command<TRequest, TResponse> {
+abstract class Command<TRequest, TResponse> {
 
     protected static final String OPEN_SESSION = "OpenSession";
     protected static final String GET_PLAYER_INFO = "GetPlayerInfo";
