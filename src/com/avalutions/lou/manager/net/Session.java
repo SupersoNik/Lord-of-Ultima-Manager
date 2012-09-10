@@ -3,6 +3,7 @@ package com.avalutions.lou.manager.net;
 import com.avalutions.lou.manager.models.World;
 import com.avalutions.lou.manager.net.commands.Poll;
 import com.avalutions.lou.manager.net.commands.Reset;
+import com.avalutions.lou.manager.net.commands.responses.ResetResponse;
 import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,15 +28,7 @@ public class Session {
 
     private static Session[] sessions;
     private static Session activeSession;
-    private static SessionActivationHandler activationHandler;
 
-    public interface SessionActivationHandler {
-        public void onSessionActivated();
-    }
-
-    public synchronized static void setActivationHandler(SessionActivationHandler handler) {
-        activationHandler = handler;
-    }
     public static Session[] getSessions() {
         return sessions;
     }
@@ -95,20 +88,19 @@ public class Session {
         world = new World();
     }
 
+    public void startPolling() {
+        timer.schedule(pollHandler, 0, 2000);
+    }
+
     public void activate() {
         Reset reset = new Reset(this);
-        reset.run();
+        ResetResponse response = reset.run();
+        sessionId = response.i;
 
         if(activeSession != null) {
             activeSession.deactivate();
         }
         activeSession = this;
-
-        if(activationHandler != null) {
-            activationHandler.onSessionActivated();
-        }
-
-        timer.schedule(pollHandler, 0, 2000);
     }
 
     private void deactivate() {

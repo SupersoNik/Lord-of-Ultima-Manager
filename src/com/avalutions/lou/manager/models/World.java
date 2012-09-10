@@ -1,5 +1,7 @@
 package com.avalutions.lou.manager.models;
 
+import com.avalutions.lou.manager.net.commands.responses.poll.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: benny
@@ -11,11 +13,10 @@ public class World {
     private String id;
     private Player player;
     private Alliance alliance;
+    public int currentCityId;
     private City currentCity;
-    private QuestLog quests;
-    private Journal journal;
-    private Mailbox mailbox;
-
+    private QuestProgress quests;
+    private Mail mailbox;
 
     public World() {
     }
@@ -60,29 +61,20 @@ public class World {
         onWorldChanged(WorldChange.Alliance);
     }
 
-    public QuestLog getQuests() {
+    public QuestProgress getQuests() {
         return quests;
     }
 
-    public void setQuests(QuestLog quests) {
+    public void setQuests(QuestProgress quests) {
         this.quests = quests;
         onWorldChanged(WorldChange.Quest);
     }
 
-    public Journal getJournal() {
-        return journal;
-    }
-
-    public void setJournal(Journal journal) {
-        this.journal = journal;
-        onWorldChanged(WorldChange.Journal);
-    }
-
-    public Mailbox getMailbox() {
+    public Mail getMailbox() {
         return mailbox;
     }
 
-    public void setMailbox(Mailbox mailbox) {
+    public void setMailbox(Mail mailbox) {
         this.mailbox = mailbox;
         onWorldChanged(WorldChange.Mailbox);
     }

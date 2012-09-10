@@ -11,8 +11,8 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import com.avalutions.lou.manager.R;
-import com.avalutions.lou.manager.models.City;
 import com.avalutions.lou.manager.net.Session;
+import com.avalutions.lou.manager.net.commands.responses.poll.City;
 
 public class CityDetails extends TabActivity {
 	private TabHost mTabHost;
@@ -26,7 +26,7 @@ public class CityDetails extends TabActivity {
 
         dialog = new ProgressDialog(this);
 		
-		if((Session.getActive().world.getCurrentCity()).getResources() == null) {
+		if((Session.getActive().world.getCurrentCity()).resources == null) {
             dialog.setMessage("Loading city...");
             dialog.show();
 		}
@@ -53,15 +53,15 @@ public class CityDetails extends TabActivity {
 	private void updateDetails() {
         City city = Session.getActive().world.getCurrentCity();
         TextView tv = (TextView)findViewById(R.id.city_details_city_name);
-        tv.setText(city.getName());
+        tv.setText(city.name);
 	}
 	
 	private void updatePollDetails() {
         City city = Session.getActive().world.getCurrentCity();
         TextView tv = (TextView)findViewById(R.id.city_details_city_wall);
-        tv.setText(String.valueOf(city.getCityWall().getLevel()));
+        tv.setText(String.valueOf(city.wallLevel));
         tv = (TextView)findViewById(R.id.city_details_town_hall);
-        tv.setText(String.valueOf(city.getTownHall().getLevel()));
+        tv.setText(String.valueOf(city.townHallLevel));
 
         if(mTabHost == null) {
             mTabHost = (TabHost) findViewById(android.R.id.tabhost);

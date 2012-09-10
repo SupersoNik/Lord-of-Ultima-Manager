@@ -17,11 +17,10 @@ public class LoginActivity extends Activity {
     private OnClickListener loginHandler = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            LoginTask lst = new LoginTask();
             final EditText usernameView = (EditText)LoginActivity.this.findViewById(R.id.txtUsername);
             final EditText passwordView = (EditText)LoginActivity.this.findViewById(R.id.txtPassword);
 
-            lst.execute(usernameView.getText().toString(), passwordView.getText().toString());
+            loginTask.execute(usernameView.getText().toString(), passwordView.getText().toString());
         }
     };
 	
@@ -35,11 +34,12 @@ public class LoginActivity extends Activity {
         btn.setOnClickListener(loginHandler);
     }
 
-    private class LoginTask extends AsyncTask<String, Void, Void> {
-        private final ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
+    private AsyncTask<String, Void, Void> loginTask =new  AsyncTask<String, Void, Void>() {
+        private ProgressDialog dialog;
         
         @Override
         protected void onPreExecute() {
+            dialog = new ProgressDialog(LoginActivity.this);
             dialog.setMessage("Logging in");
             dialog.show();
         }
@@ -67,6 +67,5 @@ public class LoginActivity extends Activity {
             Intent intent = new Intent(LoginActivity.this, SessionListing.class);
             startActivity(intent);
         }
-     
-    }
+    };
 }

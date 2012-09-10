@@ -3,51 +3,69 @@ package com.avalutions.lou.manager.android;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.avalutions.lou.manager.R;
 import com.avalutions.lou.manager.android.adapters.CityAdapter;
-import com.avalutions.lou.manager.models.City;
-import com.avalutions.lou.manager.models.Player;
-import com.avalutions.lou.manager.models.World;
 import com.avalutions.lou.manager.net.Session;
+import com.avalutions.lou.manager.net.commands.GetPlayerInfo;
+import com.avalutions.lou.manager.net.commands.responses.PlayerInfoResponse;
+import com.avalutions.lou.manager.net.commands.responses.poll.City;
 
 import java.text.NumberFormat;
 
 public class CityListing extends ListActivity {
-    private ProgressDialog dialog;
-    private Session.SessionActivationHandler activationHandler = new Session.SessionActivationHandler() {
+
+    private AsyncTask<Void, Void, PlayerInfoResponse> playerInfoTask = new AsyncTask<Void, Void, PlayerInfoResponse>() {
+        private ProgressDialog dialog;
+
         @Override
-        public void onSessionActivated() {
-            Session.getActive().world.setWorldChangedHandler(CityListing.this.worldChangedHandler);
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(CityListing.this);
+            dialog.setMessage("Loading player information");
+            dialog.show();
+        }
+
+        @Override
+        protected PlayerInfoResponse doInBackground(Void... voids) {
+            GetPlayerInfo getPlayerInfo = new GetPlayerInfo();
+            return getPlayerInfo.run();
+        }
+
+        @Override
+        protected void onPostExecute(PlayerInfoResponse playerInfoResponse) {
+            updateFromInfo(playerInfoResponse);
+
+            if(dialog.isShowing()) {
+                dialog.dismiss();
+            }
         }
     };
-    private World.WorldChangedHandler worldChangedHandler = new World.WorldChangedHandler() {
-        @Override
-        public void onWorldChanged(World.WorldChange whatChanged) {
-            CityListing.this.updateDetails();
+
+    private void updateFromInfo(PlayerInfoResponse player) {
+        NumberFormat formatter = NumberFormat.getIntegerInstance();
+
+        TextView tvPlayer = (TextView)this.findViewById(R.id.txtPlayerName);
+        tvPlayer.setText(player.name);
+        TextView tvScore = (TextView)this.findViewById(R.id.txtPlayerScore);
+        tvScore.setText(formatter.format(player.score));
+        CityAdapter adapter = new CityAdapter(this, player.cities);
+        setListAdapter(adapter);
+        if(Session.getActive().world.getAlliance() != null) {
+            TextView tvAlliance = (TextView)this.findViewById(R.id.txtAlliance);
+            tvAlliance.setText(Session.getActive().world.getAlliance().name);
         }
-    };
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.worlddetails);
 
-        dialog = new ProgressDialog(this);
-        Session.setActivationHandler(activationHandler);
-
-        if(Session.getActive().world.getPlayer() == null ||
-                Session.getActive().world.getPlayer().getCities() == null ||
-                Session.getActive().world.getPlayer().getCities().length <= 0) {
-            dialog.setMessage("Loading cities...");
-            dialog.show();
-        } else {
-            updateDetails();
-        }
+        playerInfoTask.execute();
     }
     
     @Override
@@ -59,32 +77,6 @@ public class CityListing extends ListActivity {
 
         Intent intent = new Intent(this, CityDetails.class);
         startActivity(intent);
-        
-    }
-    
-    private void updateDetails() {
-        NumberFormat formatter = NumberFormat.getIntegerInstance();
-        Player player = Session.getActive().world.getPlayer();
-        
-        TextView tvPlayer = (TextView)this.findViewById(R.id.txtPlayerName);
-        tvPlayer.setText(player.getName());
-        TextView tvScore = (TextView)this.findViewById(R.id.txtPlayerScore);
-        tvScore.setText(formatter.format(player.getScore()));
-        CityAdapter adapter = new CityAdapter(this, player.getCities());
-        setListAdapter(adapter);
-        if(Session.getActive().world.getAlliance() != null) {
-            TextView tvAlliance = (TextView)this.findViewById(R.id.txtAlliance);
-            tvAlliance.setText(Session.getActive().world.getAlliance().getName());
-        }
-    }
-
-    public void BucketChanged(String bucket) {
-        if(bucket.equals(getString(R.string.bucket_player_details))) {
-            if (this.dialog.isShowing()) {
-                this.dialog.dismiss();
-            }
-            updateDetails();
-        }
         
     }
 }

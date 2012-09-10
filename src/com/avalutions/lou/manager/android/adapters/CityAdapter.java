@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.avalutions.lou.manager.R;
-import com.avalutions.lou.manager.models.CityHeader;
+import com.avalutions.lou.manager.net.commands.responses.poll.PlayerCity;
 
-public class CityAdapter extends ArrayAdapter<CityHeader> {
+public class CityAdapter extends ArrayAdapter<PlayerCity> {
     private final Activity context;
-    private final CityHeader[] cities;
+    private final PlayerCity[] cities;
 
-    public CityAdapter(Activity context, CityHeader[] cities) {
+    public CityAdapter(Activity context, PlayerCity[] cities) {
         super(context, R.layout.worlditem, cities);
         this.context = context;
         this.cities = cities;
@@ -24,7 +24,7 @@ public class CityAdapter extends ArrayAdapter<CityHeader> {
         View rowView = inflater.inflate(R.layout.cityitem, null, true);
         
         TextView textView = (TextView) rowView.findViewById(R.id.txtCityName);
-        textView.setText(cities[position].getName());
+        textView.setText(cities[position].name);
 
         return rowView;
     }

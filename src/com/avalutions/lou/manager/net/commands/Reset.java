@@ -23,7 +23,7 @@ public class Reset extends Command<ResetRequest, ResetResponse> {
     @Override
     public ResetResponse run() {
         try {
-            ResetRequest request = new ResetRequest(sessionToReset.sessionId);
+            ResetRequest request = new ResetRequest(sessionToReset.sessionId, true);
             return run(request);
         } catch (IOException e) {
             Log.e("Reset", "Couldn't reset session", e);

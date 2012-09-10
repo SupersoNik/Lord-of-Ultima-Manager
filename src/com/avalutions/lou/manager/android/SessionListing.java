@@ -11,8 +11,9 @@ import com.avalutions.lou.manager.android.adapters.SessionAdapter;
 import com.avalutions.lou.manager.net.Session;
 
 public class SessionListing extends ListActivity {
-    private ProgressDialog progressDialog;
     private AsyncTask<Session, Void, Void> activationTask = new AsyncTask<Session, Void, Void>() {
+        private ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(SessionListing.this, "", "Activating...");

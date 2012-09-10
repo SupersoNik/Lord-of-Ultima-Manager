@@ -3,15 +3,12 @@ package com.avalutions.lou.manager.net.commands.requests;
 /**
  * Created with IntelliJ IDEA.
  * User: Avalutions
- * Date: 9/8/12
- * Time: 7:49 PM
+ * Date: 9/9/12
+ * Time: 9:51 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ResetRequest extends Request {
-    public boolean reset;
-
-    public ResetRequest(String session, boolean reset) {
+public class PlayerInfoRequest extends Request {
+    public PlayerInfoRequest(String session) {
         super(session);
-        this.reset = reset;
     }
 }

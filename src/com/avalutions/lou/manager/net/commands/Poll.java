@@ -1,17 +1,20 @@
 package com.avalutions.lou.manager.net.commands;
 
 import android.util.Log;
+import com.avalutions.lou.manager.net.Session;
 import com.avalutions.lou.manager.net.commands.requests.PollRequest;
 import com.avalutions.lou.manager.net.commands.responses.PollResponse;
 
 import java.io.IOException;
 
 public class Poll extends Command<PollRequest, PollResponse> {
-    public int sequence;
+    private int sequence;
+    private Requests requests;
 
     public Poll(int sequence) {
         super(PollRequest.class, PollResponse.class);
         this.sequence = sequence;
+        this.requests = new Requests();
     }
 
     @Override
@@ -22,6 +25,12 @@ public class Poll extends Command<PollRequest, PollResponse> {
     @Override
     public PollResponse run() {
         try {
+            Session session = getSession();
+            if(session.world.getCurrentCity() != null) {
+                requests.CITY = String.valueOf(session.world.currentCityId);
+            }
+            requests.CAT = sequence == 1 ? "0" : "1";
+            requests.WC = sequence == 1 ? "A" : "";
             PollRequest request = new PollRequest(getSession().sessionId, sequence, new Requests().toString());
             return run(request);
         } catch (IOException e) {
@@ -31,10 +40,8 @@ public class Poll extends Command<PollRequest, PollResponse> {
     }
 
     public class Requests {
-        public String UA = "";
-        public String TM = "";
+        public String TM = "0,0,";
         public String CAT = "";
-        public String TIME = "";
         public String SERVER = "";
         public String ALLIANCE = "";
         public String QUEST = "";
@@ -44,7 +51,6 @@ public class Poll extends Command<PollRequest, PollResponse> {
         public String CITY = "";
         public String WC = "";
         public String WORLD = "";
-        public String VIS = "c:22413544:0:-714:-416:1516:1008";
         public String UFP = "";
         public String REPORT = "";
         public String MAIL = "";
@@ -54,17 +60,14 @@ public class Poll extends Command<PollRequest, PollResponse> {
         public String EC = "";
         public String INV = "";
         public String AI = "";
-        public String MAT = "22413544";
+        public String MAT = "";
 
         @Override
         public String toString() {
             StringBuilder builder = new StringBuilder();
-            if (UA != null) {
-                builder.append("UA").append(UA).append("\f");
-            }
             builder.append("TM:").append(TM).append("\f");
             builder.append("CAT:").append(CAT).append("\f");
-            builder.append("TIME:").append(TIME).append("\f");
+            builder.append("TIME:").append(System.currentTimeMillis()).append("\f");
             builder.append("SERVER:").append(SERVER).append("\f");
             builder.append("ALLIANCE:").append(ALLIANCE).append("\f");
             builder.append("QUEST:").append(QUEST).append("\f");
@@ -74,7 +77,7 @@ public class Poll extends Command<PollRequest, PollResponse> {
             builder.append("CITY:").append(CITY).append("\f");
             builder.append("WC:").append(WC).append("\f");
             builder.append("WORLD:").append(WORLD).append("\f");
-            builder.append("VIS:").append(VIS).append("\f");
+            builder.append("VIS:").append(String.format("c:%s:0:-714:-416:1516:1008", CITY)).append("\f");
             builder.append("UFP:").append(UFP).append("\f");
             builder.append("REPORT:").append(REPORT).append("\f");
             builder.append("MAIL:").append(MAIL).append("\f");
@@ -84,7 +87,7 @@ public class Poll extends Command<PollRequest, PollResponse> {
             builder.append("EC:").append(EC).append("\f");
             builder.append("INV:").append(INV).append("\f");
             builder.append("AI:").append(AI).append("\f");
-            builder.append("MAT:").append(MAT).append("\f");
+            builder.append("MAT:").append(CITY).append("\f");
             return builder.toString();
         }
     }
