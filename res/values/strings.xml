@@ -3,4 +3,19 @@
     <string name="hello">Hello World, LoginActivity!</string>
     <string name="app_name">Lord of Ultima Manager</string>
     <string name="city_details_button_request">Request Resources</string>
+    <string name="title">Lord of Ultima Manager</string>
+    <style name="ButtonText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:typeface">serif</item>
+    </style>
 </resources>

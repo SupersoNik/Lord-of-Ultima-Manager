@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import com.avalutions.lou.manager.R;
 import com.avalutions.lou.manager.android.adapters.SessionAdapter;
 import com.avalutions.lou.manager.net.Session;
 
@@ -39,6 +40,7 @@ public class SessionListing extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        setContentView(R.layout.world_list);
 
 		SessionAdapter adapter = new SessionAdapter(this, Session.getSessions());
 		setListAdapter(adapter);

@@ -1,24 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<TextView android:text="Lord of Ultima Manager"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@drawable/background"
+        android:padding="10dp">
+	<TextView android:text="@string/title"
+              android:id="@+id/header"
 		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_width="100dp" android:gravity="center" android:layout_gravity="center"
-		android:layout_margin="15dp"></TextView>
-	<TableLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
-		<TableRow android:padding="5dp">
-			<TextView android:text="Username:"></TextView>
-			<EditText android:id="@+id/txtUsername" android:inputType="textEmailAddress" android:layout_width="fill_parent" android:layout_weight="1">
-				<requestFocus></requestFocus>
-			</EditText>
-		</TableRow>
-		<TableRow android:padding="5dp">
-			<TextView android:text="Password:"></TextView>
-			<EditText android:id="@+id/txtPassword" android:inputType="textPassword" android:layout_width="fill_parent" android:layout_weight="1"></EditText>
-		</TableRow>
-		<TableRow android:padding="5dp">
-			<Button android:text="Login" android:layout_width="fill_parent" android:gravity="center" android:layout_weight="1"
-				android:id="@+id/btnLogin"></Button>
-		</TableRow>
-	</TableLayout>
-</LinearLayout>
+		android:layout_width="fill_parent" android:gravity="center"
+		android:layout_margin="15dp" android:textColor="#f3d3a4" android:textColorHighlight="#111111"
+        android:typeface="serif" android:textStyle="bold"/>
+	<LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/header">
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="#f3d3a4"
+                  android:text="Email" android:typeface="serif"/>
+        <EditText android:id="@+id/txtUsername"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="5dip"
+                  android:layout_marginBottom="20dip"
+                  android:singleLine="true"/>
+        <!--  Password Label -->
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="#f3d3a4"
+                  android:text="Password" android:typeface="serif"/>
+        <EditText android:id="@+id/txtPassword"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="5dip"
+                  android:singleLine="true"
+                  android:password="true"/>
+        <!-- Login button -->
+        <Button android:id="@+id/btnLogin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:background="@drawable/red_button"
+                style="@style/ButtonText"/>
+	</LinearLayout>
+    <ImageView
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/loum" />
+</RelativeLayout>

@@ -11,7 +11,7 @@ public class TradeRequest extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.worlddetails);
+        setContentView(R.layout.world_details);
 
         Intent intent = this.getIntent();
     }

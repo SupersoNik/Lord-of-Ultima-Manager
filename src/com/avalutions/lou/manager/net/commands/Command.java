@@ -5,6 +5,8 @@ import com.avalutions.lou.manager.net.UltimaClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,13 +33,15 @@ abstract class Command<TRequest, TResponse> {
     protected static final String POLL = "poll";
 
     protected abstract String getAction();
-    private ObjectMapper mapper = new ObjectMapper();
+    protected final  ObjectMapper mapper = new ObjectMapper();
     private Class<TResponse> responseType;
     private Class<TRequest> requestType;
 
     protected Command(Class<TRequest> requestType, Class<TResponse> responseType) {
         this.requestType = requestType;
         this.responseType = responseType;
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        mapper.setDateFormat(df);
     }
 
     protected TResponse handleResponse(String response) throws IOException {

@@ -38,8 +38,8 @@ public class Session {
     public static boolean login(String username, String password) {
         //authentication block:
         List<BasicNameValuePair> nvps = new ArrayList<BasicNameValuePair>();
-        nvps.add(new BasicNameValuePair("mail", username));
-        nvps.add(new BasicNameValuePair("password", password));
+        nvps.add(new BasicNameValuePair("mail", "bennyandlinds@gmail.com"));
+        nvps.add(new BasicNameValuePair("password", "RunS0meLaps"));
 
         UltimaClient.getInstance().post("https://www.lordofultima.com/en/user/login", nvps);
 
@@ -47,7 +47,7 @@ public class Session {
 
         Document doc = Jsoup.parse(html);
         Elements forms = doc.select("form");
-        Pattern pattern = Pattern.compile("http://prodgame(\\d+)\\.lordofultima.com/(\\d+)/index.aspx");
+        Pattern pattern = Pattern.compile("http://prodgame(\\d+)\\.lordofultima.com/(\\d+)/index.aspx");       //<form.*action=\"http://prodgame(\\d+)\\.lordofultima\\.com/(\\d+)/index\\.aspx\">[\\n\\s]*<input type=\"hidden\" name=\"sessionId\" id=\"sessionId\" value=\"(.*)\" />[\\n\\s]*.*[\\n\\s]*.*World (\\d+) \\((.*)\\).*[\\n\\s]*.*[\\n\\s]*</form>
         Pattern worldPattern = Pattern.compile("World (\\d+) \\((.*)\\)");
         Matcher matcher, worldMatcher;
         List<Session> sessionList = new ArrayList<Session>();

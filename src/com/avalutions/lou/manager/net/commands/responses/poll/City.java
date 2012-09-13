@@ -1,5 +1,6 @@
 package com.avalutions.lou.manager.net.commands.responses.poll;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * Time: 4:55 PM
  * To change this template use File | Settings | File Templates.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class City {
     @JsonProperty("n")
     public String name;

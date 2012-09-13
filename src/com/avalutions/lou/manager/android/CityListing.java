@@ -1,23 +1,27 @@
 package com.avalutions.lou.manager.android;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.avalutions.lou.manager.R;
 import com.avalutions.lou.manager.android.adapters.CityAdapter;
 import com.avalutions.lou.manager.net.Session;
 import com.avalutions.lou.manager.net.commands.GetPlayerInfo;
+import com.avalutions.lou.manager.net.commands.Poll;
 import com.avalutions.lou.manager.net.commands.responses.PlayerInfoResponse;
+import com.avalutions.lou.manager.net.commands.responses.PollResponse;
 import com.avalutions.lou.manager.net.commands.responses.poll.City;
 
 import java.text.NumberFormat;
 
-public class CityListing extends ListActivity {
+public class CityListing extends Activity {
+    private ListView cityList;
 
     private AsyncTask<Void, Void, PlayerInfoResponse> playerInfoTask = new AsyncTask<Void, Void, PlayerInfoResponse>() {
         private ProgressDialog dialog;
@@ -42,6 +46,9 @@ public class CityListing extends ListActivity {
             if(dialog.isShowing()) {
                 dialog.dismiss();
             }
+
+            Poll poll = new Poll(0);
+            PollResponse response = poll.run();
         }
     };
 
@@ -53,7 +60,9 @@ public class CityListing extends ListActivity {
         TextView tvScore = (TextView)this.findViewById(R.id.txtPlayerScore);
         tvScore.setText(formatter.format(player.score));
         CityAdapter adapter = new CityAdapter(this, player.cities);
-        setListAdapter(adapter);
+        cityList = (ListView)findViewById(R.id.cityList);
+        cityList.setAdapter(adapter);
+        cityList.setOnItemClickListener(listItemClicked);
         if(Session.getActive().world.getAlliance() != null) {
             TextView tvAlliance = (TextView)this.findViewById(R.id.txtAlliance);
             tvAlliance.setText(Session.getActive().world.getAlliance().name);
@@ -63,20 +72,19 @@ public class CityListing extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.worlddetails);
+        setContentView(R.layout.world_details);
 
         playerInfoTask.execute();
     }
-    
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
 
-        City city = (City)this.getListAdapter().getItem(position);
-        Session.getActive().world.setCurrentCity(city);
+    private AdapterView.OnItemClickListener listItemClicked = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            City city = (City)adapterView.getItemAtPosition(i);
+            Session.getActive().world.setCurrentCity(city);
 
-        Intent intent = new Intent(this, CityDetails.class);
-        startActivity(intent);
-        
-    }
+            Intent intent = new Intent(CityListing.this, CityDetails.class);
+            startActivity(intent);
+        }
+    };
 }

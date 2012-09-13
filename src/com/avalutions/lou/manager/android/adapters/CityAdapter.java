@@ -14,7 +14,7 @@ public class CityAdapter extends ArrayAdapter<PlayerCity> {
     private final PlayerCity[] cities;
 
     public CityAdapter(Activity context, PlayerCity[] cities) {
-        super(context, R.layout.worlditem, cities);
+        super(context, R.layout.world_item, cities);
         this.context = context;
         this.cities = cities;
     }

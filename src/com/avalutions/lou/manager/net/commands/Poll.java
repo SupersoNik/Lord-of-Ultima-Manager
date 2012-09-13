@@ -4,6 +4,10 @@ import android.util.Log;
 import com.avalutions.lou.manager.net.Session;
 import com.avalutions.lou.manager.net.commands.requests.PollRequest;
 import com.avalutions.lou.manager.net.commands.responses.PollResponse;
+import com.avalutions.lou.manager.net.commands.responses.poll.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.io.IOException;
 
@@ -37,6 +41,70 @@ public class Poll extends Command<PollRequest, PollResponse> {
             Log.e("Reset", "Couldn't reset session", e);
             return null;
         }
+    }
+
+    @Override
+    protected PollResponse handleResponse(String response) throws IOException {
+        PollResponse result = new PollResponse();
+        ArrayNode root = (ArrayNode)mapper.readTree(response);
+        for(JsonNode node : root) {
+            if(node.get("C").asText().equals("PLAYER")) {
+                try {
+                    result.player = mapper.readValue(node.get("D").toString(), new TypeReference<Player>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "Player", exc);
+                }
+            } else if (node.get("C").asText().equals("CITY")) {
+                try {
+                    result.city = mapper.readValue(node.get("D").toString(), new TypeReference<City>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "City", exc);
+                }
+            } else if (node.get("C").asText().equals("ALLIANCE")) {
+                try {
+                    result.alliance = mapper.readValue(node.get("D").toString(), new TypeReference<Alliance>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "Alliance", exc);
+                }
+            } else if (node.get("C").asText().equals("QUEST")) {
+                try {
+                    result.quest = mapper.readValue(node.get("D").toString(), new TypeReference<QuestProgress>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "QuestProgress", exc);
+                }
+            } else if (node.get("C").asText().equals("FRIENDINV")) {
+                try {
+                    result.friend = mapper.readValue(node.get("D").toString(), new TypeReference<FriendInvites>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "Friends", exc);
+                }
+            } else if (node.get("C").asText().equals("INV")) {
+                try {
+                    result.inv = mapper.readValue(node.get("D").toString(), new TypeReference<Invites>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "Invites", exc);
+                }
+            } else if (node.get("C").asText().equals("MAIL")) {
+                try {
+                    result.mail = mapper.readValue(node.get("D").toString(), new TypeReference<Mail>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "Mail", exc);
+                }
+            } else if (node.get("C").asText().equals("SERVER")) {
+                try {
+                    result.server = mapper.readValue(node.get("D").toString(), new TypeReference<Server>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "Server", exc);
+                }
+            } else if (node.get("C").asText().equals("TIME")) {
+                try {
+                    result.time = mapper.readValue(node.get("D").toString(), new TypeReference<Time>() { });
+                } catch(IOException exc) {
+                    Log.e("JSON", "Time", exc);
+                }
+            }
+        }
+        return result;
     }
 
     public class Requests {

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/background">
+    <TextView android:text="My Games"
+              android:id="@+id/txtPlayerName"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceLarge"
+              android:layout_width="fill_parent"
+              android:gravity="center"
+              android:layout_margin="15dp"
+              android:textColor="#f3d3a4"
+              android:textColorHighlight="#111111"
+              android:typeface="serif"
+              android:textStyle="bold" android:textSize="30dp"/>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="vertical" android:id="@+id/header" android:layout_below="@id/txtPlayerName">
+        <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:padding="5dp"
+                      android:orientation="horizontal">
+        	<TextView style="@style/bold_label" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:text="Score: "/>
+        	<TextView style="@style/bold_label" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/txtPlayerScore" />
+        	<TextView style="@style/bold_label" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingLeft="5dp" android:text="Rank: "/>
+        	<TextView style="@style/bold_label" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="(unknown)" android:id="@+id/txtPlayerRank" />
+        </LinearLayout>
+        <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal" android:padding="5dp">
+        	<TextView style="@style/bold_label" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:text="Alliance: "/>
+        	<TextView style="@style/bold_label" android:layout_height="wrap_content" android:paddingLeft="5dp" android:layout_width="wrap_content" android:id="@+id/txtAlliance" android:text="(none)"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:layout_below="@id/header" android:orientation="horizontal" android:id="@+id/menu">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="Mail"
+                style="@style/ButtonText"
+                android:background="@drawable/red_button"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="Quests"
+                style="@style/ButtonText"
+                android:background="@drawable/red_button"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="Reports"
+                style="@style/ButtonText"
+                android:background="@drawable/red_button"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="Alliance"
+                style="@style/ButtonText"
+                android:background="@drawable/red_button"/>
+    </LinearLayout>
+    <ListView android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:id="@+id/cityList"
+              android:padding="10dp"
+              android:layout_below="@id/menu" />
+    <ImageView
+            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/loum" />
+</RelativeLayout>

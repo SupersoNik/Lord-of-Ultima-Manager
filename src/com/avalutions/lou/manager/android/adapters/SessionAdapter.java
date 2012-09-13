@@ -14,7 +14,7 @@ public class SessionAdapter extends ArrayAdapter<Session> {
 	private final Session[] sessions;
 
 	public SessionAdapter(Activity context, Session[] sessions) {
-		super(context, R.layout.worlditem, sessions);
+		super(context, R.layout.world_item, sessions);
 		this.context = context;
 		this.sessions = sessions;
 	}
@@ -23,7 +23,7 @@ public class SessionAdapter extends ArrayAdapter<Session> {
 		LayoutInflater inflater = context.getLayoutInflater();
         Session session = sessions[position];
 
-		View rowView = inflater.inflate(R.layout.worlditem, null, true);
+		View rowView = inflater.inflate(R.layout.world_item, null, true);
 
 		TextView textView = (TextView) rowView.findViewById(R.id.txtWorldNumber);
         TextView txtRegion = (TextView) rowView.findViewById(R.id.txtWorldRegion);
