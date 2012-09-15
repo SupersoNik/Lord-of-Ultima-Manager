@@ -4,6 +4,24 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="@drawable/background">
+    <LinearLayout android:layout_alignParentRight="true"
+              android:layout_alignParentTop="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:typeface="serif"
+                android:textSize="10dp"
+                android:text="Last updated:" android:textColor="@android:color/white"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:typeface="serif"
+                android:textSize="10dp"
+                android:id="@+id/updatedTime"
+                android:text="10:10 PM" android:textColor="@android:color/white"/>
+              </LinearLayout>
     <TextView android:text="My Games"
               android:id="@+id/txtPlayerName"
               android:layout_height="wrap_content"
@@ -34,30 +52,32 @@
                 android:layout_height="fill_parent"
                 android:text="Mail"
                 style="@style/ButtonText"
-                android:background="@drawable/red_button"/>
+                android:background="@drawable/red_button" android:id="@+id/button_mail"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Quests"
                 style="@style/ButtonText"
-                android:background="@drawable/red_button"/>
+                android:background="@drawable/red_button" android:id="@+id/button_quests"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Reports"
                 style="@style/ButtonText"
-                android:background="@drawable/red_button"/>
+                android:background="@drawable/red_button" android:id="@+id/button_reports"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="Alliance"
                 style="@style/ButtonText"
-                android:background="@drawable/red_button"/>
+                android:background="@drawable/red_button" android:id="@+id/button_alliance"/>
     </LinearLayout>
     <ListView android:layout_height="wrap_content"
               android:layout_width="fill_parent"
               android:id="@+id/cityList"
-              android:padding="10dp"
+              android:padding="20dp"
+              android:divider="@android:color/transparent"
+              android:dividerHeight="10.0sp"
               android:layout_below="@id/menu" />
     <ImageView
             android:layout_height="50dp"

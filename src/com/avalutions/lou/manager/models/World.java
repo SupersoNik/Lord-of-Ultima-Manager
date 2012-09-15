@@ -1,5 +1,7 @@
 package com.avalutions.lou.manager.models;
 
+import com.avalutions.lou.manager.net.commands.Poll;
+import com.avalutions.lou.manager.net.commands.responses.PollResponse;
 import com.avalutions.lou.manager.net.commands.responses.poll.*;
 
 /**
@@ -13,7 +15,7 @@ public class World {
     private String id;
     private Player player;
     private Alliance alliance;
-    public int currentCityId;
+    public long currentCityId;
     private City currentCity;
     private QuestProgress quests;
     private Mail mailbox;
@@ -86,5 +88,29 @@ public class World {
     public void setCurrentCity(City currentCity) {
         this.currentCity = currentCity;
         onWorldChanged(WorldChange.City);
+    }
+
+    public synchronized void update() {
+        Poll poll = new Poll();
+        PollResponse response = poll.run();
+
+        if(response.player != null) {
+            setPlayer(response.player);
+        }
+        if(response.alliance != null) {
+            setAlliance(response.alliance);
+        }
+        if(response.chats != null) {
+            setMailbox(response.mail);
+        }
+        if(response.city != null) {
+            setCurrentCity(response.city);
+        }
+        if(response.mail != null) {
+            setMailbox(response.mail);
+        }
+        if(response.quest != null) {
+            setQuests(response.quest);
+        }
     }
 }

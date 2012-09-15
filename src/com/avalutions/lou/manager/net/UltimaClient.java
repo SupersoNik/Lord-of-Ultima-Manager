@@ -40,7 +40,7 @@ public class UltimaClient {
         }
         return _instance;
     }
-    
+
     public static JSONObject[] getJSONObjectArray(JSONArray values) throws JSONException {
         JSONObject[] result = new JSONObject[values.length()];
         for(int i = 0; i < values.length(); i++) {

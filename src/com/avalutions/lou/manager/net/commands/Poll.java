@@ -12,12 +12,11 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.IOException;
 
 public class Poll extends Command<PollRequest, PollResponse> {
-    private int sequence;
+    private static int sequence = 0;
     private Requests requests;
 
-    public Poll(int sequence) {
+    public Poll() {
         super(PollRequest.class, PollResponse.class);
-        this.sequence = sequence;
         this.requests = new Requests();
     }
 
@@ -36,7 +35,9 @@ public class Poll extends Command<PollRequest, PollResponse> {
             requests.CAT = sequence == 1 ? "0" : "1";
             requests.WC = sequence == 1 ? "A" : "";
             PollRequest request = new PollRequest(getSession().sessionId, sequence, new Requests().toString());
-            return run(request);
+            PollResponse response = run(request);
+            sequence++;
+            return response;
         } catch (IOException e) {
             Log.e("Reset", "Couldn't reset session", e);
             return null;
@@ -45,6 +46,7 @@ public class Poll extends Command<PollRequest, PollResponse> {
 
     @Override
     protected PollResponse handleResponse(String response) throws IOException {
+        if(response == null || response.equals("")) return new PollResponse();
         PollResponse result = new PollResponse();
         ArrayNode root = (ArrayNode)mapper.readTree(response);
         for(JsonNode node : root) {

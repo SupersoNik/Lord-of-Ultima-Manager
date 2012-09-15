@@ -1,7 +1,6 @@
 package com.avalutions.lou.manager.net;
 
 import com.avalutions.lou.manager.models.World;
-import com.avalutions.lou.manager.net.commands.Poll;
 import com.avalutions.lou.manager.net.commands.Reset;
 import com.avalutions.lou.manager.net.commands.responses.ResetResponse;
 import org.apache.http.message.BasicNameValuePair;
@@ -13,7 +12,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,10 +86,6 @@ public class Session {
         world = new World();
     }
 
-    public void startPolling() {
-        timer.schedule(pollHandler, 0, 2000);
-    }
-
     public void activate() {
         Reset reset = new Reset(this);
         ResetResponse response = reset.run();
@@ -106,23 +100,4 @@ public class Session {
     private void deactivate() {
 
     }
-
-    private long lastcall = System.currentTimeMillis();
-    private long lastcompleted = System.currentTimeMillis();
-    private int sequence = 1;
-    private TimerTask pollHandler = new TimerTask() {
-        @Override
-        public void run() {
-            synchronized (Session.this) {
-                if(lastcall <= lastcompleted) {
-                    Poll poll = new Poll(sequence);
-                    lastcall = System.currentTimeMillis();
-                    poll.run();
-                    lastcompleted = System.currentTimeMillis();
-
-                    sequence++;
-                }
-            }
-        }
-    };
 }

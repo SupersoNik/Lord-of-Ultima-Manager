@@ -9,6 +9,10 @@ import java.util.List;
 public class Player {
     @JsonProperty("a")
     public int a;
+    @JsonProperty("r")
+    public int rank;
+    @JsonProperty("p")
+    public int score;
     @JsonProperty("g")
     public Unit gold;
     @JsonProperty("m")
