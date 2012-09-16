@@ -40,10 +40,10 @@ public class CityDetails extends RoboSherlockFragmentActivity {
 
         setTitle(city.name);
 
-        pager.setAdapter(new CityPagerAdapter(getResources(), city, getSupportFragmentManager()));
+//        pager.setAdapter(new CityPagerAdapter(getResources(), city, getSupportFragmentManager()));
 
-        indicator.setViewPager(pager);
-        pager.setCurrentItem(1);
+//        indicator.setViewPager(pager);
+//        pager.setCurrentItem(1);
 	}
 
     @Override
@@ -58,35 +58,4 @@ public class CityDetails extends RoboSherlockFragmentActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-	private void setupTab(Class<?> cls, final String tag) {
-		Intent intent = new Intent().setClass(this, cls);
-
-		View tabview = createTabView(mTabHost.getContext(), tag);
-		TabSpec setContent = mTabHost.newTabSpec(tag).setIndicator(tabview)
-				.setContent(intent);
-		mTabHost.addTab(setContent);
-	}
-
-	private View createTabView(final Context context, final String text) {
-		View view = LayoutInflater.from(context)
-				.inflate(R.layout.tabs_bg, null);
-		TextView tv = (TextView) view.findViewById(R.id.tabsText);
-		tv.setText(text);
-		return view;
-	}
-	
-	private void updateDetails() {
-        City city = Session.getActive().world.getCurrentCity();
-        TextView tv = (TextView)findViewById(R.id.city_details_city_name);
-        tv.setText(city.name);
-	}
-	
-	private void updatePollDetails() {
-        City city = Session.getActive().world.getCurrentCity();
-        TextView tv = (TextView)findViewById(R.id.city_details_city_wall);
-        tv.setText(String.valueOf(city.wallLevel));
-        tv = (TextView)findViewById(R.id.city_details_town_hall);
-        tv.setText(String.valueOf(city.townHallLevel));
-	}
 }
