@@ -1,10 +1,8 @@
 package com.avalutions.lou.manager.android;
 
-import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerAdapter;
-import android.view.View;
-import com.avalutions.lou.manager.net.commands.responses.poll.City;
+import android.support.v4.app.FragmentPagerAdapter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,17 +11,36 @@ import com.avalutions.lou.manager.net.commands.responses.poll.City;
  * Time: 2:11 AM
  * To change this template use File | Settings | File Templates.
  */
-public class CityPagerAdapter extends PagerAdapter {
-    public CityPagerAdapter(Context context, City city, FragmentManager supportFragmentManager) {
+public class CityPagerAdapter extends FragmentPagerAdapter {
+
+    public CityPagerAdapter(FragmentManager fm) {
+        super(fm);
     }
 
     @Override
     public int getCount() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 2;
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object o) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "Overview";
+            case 1:
+                return "Troops";
+        }
+        return null;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        switch (position) {
+            case 0:
+                return new CityOverview();
+            case 1:
+                return new CityTroops();
+        }
+        return null;
     }
 }

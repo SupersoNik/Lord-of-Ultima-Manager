@@ -29,12 +29,12 @@ public class Poll extends Command<PollRequest, PollResponse> {
     public PollResponse run() {
         try {
             Session session = getSession();
-            if(session.world.getCurrentCity() != null) {
-                requests.CITY = String.valueOf(session.world.currentCityId);
+            if (session.world.getCurrentCityId() != null) {
+                requests.CITY = String.valueOf(session.world.getCurrentCityId());
             }
             requests.CAT = sequence == 1 ? "0" : "1";
             requests.WC = sequence == 1 ? "A" : "";
-            PollRequest request = new PollRequest(getSession().sessionId, sequence, new Requests().toString());
+            PollRequest request = new PollRequest(getSession().sessionId, sequence, requests.toString());
             PollResponse response = run(request);
             sequence++;
             return response;
@@ -46,62 +46,73 @@ public class Poll extends Command<PollRequest, PollResponse> {
 
     @Override
     protected PollResponse handleResponse(String response) throws IOException {
-        if(response == null || response.equals("")) return new PollResponse();
+        if (response == null || response.equals("")) {
+            return new PollResponse();
+        }
         PollResponse result = new PollResponse();
-        ArrayNode root = (ArrayNode)mapper.readTree(response);
-        for(JsonNode node : root) {
-            if(node.get("C").asText().equals("PLAYER")) {
+        ArrayNode root = (ArrayNode) mapper.readTree(response);
+        for (JsonNode node : root) {
+            if (node.get("C").asText().equals("PLAYER")) {
                 try {
-                    result.player = mapper.readValue(node.get("D").toString(), new TypeReference<Player>() { });
-                } catch(IOException exc) {
+                    result.player = mapper.readValue(node.get("D").toString(), new TypeReference<Player>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "Player", exc);
                 }
             } else if (node.get("C").asText().equals("CITY")) {
                 try {
-                    result.city = mapper.readValue(node.get("D").toString(), new TypeReference<City>() { });
-                } catch(IOException exc) {
+                    result.city = mapper.readValue(node.get("D").toString(), new TypeReference<City>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "City", exc);
                 }
             } else if (node.get("C").asText().equals("ALLIANCE")) {
                 try {
-                    result.alliance = mapper.readValue(node.get("D").toString(), new TypeReference<Alliance>() { });
-                } catch(IOException exc) {
+                    result.alliance = mapper.readValue(node.get("D").toString(), new TypeReference<Alliance>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "Alliance", exc);
                 }
             } else if (node.get("C").asText().equals("QUEST")) {
                 try {
-                    result.quest = mapper.readValue(node.get("D").toString(), new TypeReference<QuestProgress>() { });
-                } catch(IOException exc) {
+                    result.quest = mapper.readValue(node.get("D").toString(), new TypeReference<QuestProgress>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "QuestProgress", exc);
                 }
             } else if (node.get("C").asText().equals("FRIENDINV")) {
                 try {
-                    result.friend = mapper.readValue(node.get("D").toString(), new TypeReference<FriendInvites>() { });
-                } catch(IOException exc) {
+                    result.friend = mapper.readValue(node.get("D").toString(), new TypeReference<FriendInvites>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "Friends", exc);
                 }
             } else if (node.get("C").asText().equals("INV")) {
                 try {
-                    result.inv = mapper.readValue(node.get("D").toString(), new TypeReference<Invites>() { });
-                } catch(IOException exc) {
+                    result.inv = mapper.readValue(node.get("D").toString(), new TypeReference<Invites>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "Invites", exc);
                 }
             } else if (node.get("C").asText().equals("MAIL")) {
                 try {
-                    result.mail = mapper.readValue(node.get("D").toString(), new TypeReference<Mail>() { });
-                } catch(IOException exc) {
+                    result.mail = mapper.readValue(node.get("D").toString(), new TypeReference<Mail>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "Mail", exc);
                 }
             } else if (node.get("C").asText().equals("SERVER")) {
                 try {
-                    result.server = mapper.readValue(node.get("D").toString(), new TypeReference<Server>() { });
-                } catch(IOException exc) {
+                    result.server = mapper.readValue(node.get("D").toString(), new TypeReference<Server>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "Server", exc);
                 }
             } else if (node.get("C").asText().equals("TIME")) {
                 try {
-                    result.time = mapper.readValue(node.get("D").toString(), new TypeReference<Time>() { });
-                } catch(IOException exc) {
+                    result.time = mapper.readValue(node.get("D").toString(), new TypeReference<Time>() {
+                    });
+                } catch (IOException exc) {
                     Log.e("JSON", "Time", exc);
                 }
             }

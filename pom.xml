@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.avalutions.lou</groupId>
@@ -8,9 +9,9 @@
     <packaging>apk</packaging>
     <name>Lord of Ultima Manager</name>
 
-  <properties>
-    <abs.version>4.1.0</abs.version>
-  </properties>
+    <properties>
+        <abs.version>4.1.0</abs.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -39,35 +40,41 @@
             <artifactId>jsoup</artifactId>
             <version>1.6.3</version>
         </dependency>
-    <dependency>
-      <groupId>com.github.rtyley</groupId>
-      <artifactId>roboguice-sherlock</artifactId>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.roboguice</groupId>
-      <artifactId>roboguice</artifactId>
-      <version>2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.actionbarsherlock</groupId>
-      <artifactId>library</artifactId>
-      <version>4.1.0</version>
-      <type>apklib</type>
-    </dependency>
-    <dependency>
-      <groupId>com.actionbarsherlock</groupId>
-      <artifactId>library</artifactId>
-      <version>4.1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.viewpagerindicator</groupId>
-      <artifactId>library</artifactId>
-      <version>2.3.1</version>
-      <type>apklib</type>
-    </dependency>
+        <dependency>
+            <groupId>com.github.rtyley</groupId>
+            <artifactId>roboguice-sherlock</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.roboguice</groupId>
+            <artifactId>roboguice</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.actionbarsherlock</groupId>
+            <artifactId>library</artifactId>
+            <version>4.1.0</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.actionbarsherlock</groupId>
+            <artifactId>library</artifactId>
+            <version>4.1.0</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.viewpagerindicator</groupId>
+            <artifactId>library</artifactId>
+            <version>2.3.1</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kevinsawicki</groupId>
+            <artifactId>wishlist</artifactId>
+            <version>0.4</version>
+            <type>apklib</type>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -86,19 +93,19 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-            <plugins>
-      <plugin>
-        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-        <artifactId>android-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-    </plugins>
+        <plugins>
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

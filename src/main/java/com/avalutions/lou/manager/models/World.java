@@ -15,7 +15,7 @@ public class World {
     private String id;
     private Player player;
     private Alliance alliance;
-    public long currentCityId;
+    private Long currentCityId;
     private City currentCity;
     private QuestProgress quests;
     private Mail mailbox;
@@ -23,16 +23,29 @@ public class World {
     public World() {
     }
 
-    public enum WorldChange { Player, City, Quest, Journal, Alliance, Mailbox, Chat }
+    public void changeCity(long cityId) {
+        this.currentCityId = cityId;
+        update();
+    }
+
+    public Long getCurrentCityId() {
+        return currentCityId;
+    }
+
+    public enum WorldChange {Player, City, Quest, Journal, Alliance, Mailbox, Chat}
+
     private void onWorldChanged(WorldChange whatChanged) {
-        if(handler != null) {
+        if (handler != null) {
             handler.onWorldChanged(whatChanged);
         }
     }
+
     public void setWorldChangedHandler(WorldChangedHandler handler) {
         this.handler = handler;
     }
+
     private WorldChangedHandler handler;
+
     public interface WorldChangedHandler {
         public void onWorldChanged(WorldChange whatChanged);
     }
@@ -94,22 +107,22 @@ public class World {
         Poll poll = new Poll();
         PollResponse response = poll.run();
 
-        if(response.player != null) {
+        if (response.player != null) {
             setPlayer(response.player);
         }
-        if(response.alliance != null) {
+        if (response.alliance != null) {
             setAlliance(response.alliance);
         }
-        if(response.chats != null) {
+        if (response.chats != null) {
             setMailbox(response.mail);
         }
-        if(response.city != null) {
+        if (response.city != null) {
             setCurrentCity(response.city);
         }
-        if(response.mail != null) {
+        if (response.mail != null) {
             setMailbox(response.mail);
         }
-        if(response.quest != null) {
+        if (response.quest != null) {
             setQuests(response.quest);
         }
     }

@@ -1,98 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="match_parent"
-	android:orientation="vertical">
-	<LinearLayout android:layout_height="wrap_content"
-		android:layout_width="wrap_content">
-		<TextView style="@style/bold_label" android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:text="Carts:"></TextView>
-		<TextView android:layout_width="wrap_content" android:id="@+id/city_details_cart_count" android:paddingLeft="5dp"
-			android:layout_height="wrap_content"></TextView>
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="(" android:textAppearance="?android:attr/textAppearanceSmall" android:paddingLeft="5dp"></TextView>
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/city_details_cart_max" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text=")" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
-	</LinearLayout>
-	<LinearLayout android:layout_width="match_parent"
-		android:layout_height="wrap_content">
-		<TextView style="@style/bold_label" android:text="Ships: "
-			 android:layout_width="wrap_content"
-			android:layout_height="wrap_content"></TextView>
-		<TextView android:layout_width="wrap_content" android:id="@+id/city_details_ship_count" android:paddingLeft="5dp"
-			android:layout_height="wrap_content"></TextView>
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="(" android:textAppearance="?android:attr/textAppearanceSmall" android:paddingLeft="5dp"></TextView>
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/city_details_ship_max" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text=")" android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
-	</LinearLayout>
-	<LinearLayout android:layout_height="wrap_content"
-		android:layout_width="wrap_content">
-		<Button android:layout_height="wrap_content" android:id="@+id/city_details_request"
-			android:text="@string/city_details_button_request"
-			android:layout_width="100dp" android:layout_margin="10dp" />
-	</LinearLayout>
-	<TableLayout android:stretchColumns="*"
-		android:layout_width="match_parent" android:layout_height="wrap_content">
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" android:text=""
-				android:textStyle="bold"></TextView>
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" android:text="Increase"
-				android:textStyle="bold"></TextView>
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" android:text="Available"
-				android:textStyle="bold"></TextView>
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" android:text="Capacity"
-				android:textStyle="bold"></TextView>
-		</TableRow>
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" android:text="Wood"
-				android:textStyle="bold"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_wood_per"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_wood"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_wood_cap"></TextView>
-		</TableRow>
-		<TableRow android:layout_height="wrap_content"
-			android:layout_width="wrap_content">
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" android:text="Stone"
-				android:textStyle="bold"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_stone_per"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_stone"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_stone_cap"></TextView>
-		</TableRow>
-		<TableRow android:layout_height="wrap_content"
-			android:layout_width="wrap_content">
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" android:text="Iron"
-				android:textStyle="bold"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_iron_per"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_iron"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_iron_cap"></TextView>
-		</TableRow>
-		<TableRow android:layout_height="wrap_content"
-			android:layout_width="wrap_content">
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" android:text="Food"
-				android:textStyle="bold"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_food_per"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_food"></TextView>
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/citydetails_food_cap"></TextView>
-		</TableRow>
-	</TableLayout>
+              android:layout_width="match_parent" android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Incoming"/>
+    <ListView android:id="@+id/incoming_trades" android:layout_height="wrap_content"
+              android:layout_width="wrap_content"/>
+
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Outgoing"/>
+    <ListView android:id="@+id/outgoing_trades" android:layout_height="wrap_content"
+              android:layout_width="wrap_content"/>
+
 </LinearLayout>

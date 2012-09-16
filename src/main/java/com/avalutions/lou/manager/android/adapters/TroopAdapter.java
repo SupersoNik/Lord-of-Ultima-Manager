@@ -1,21 +1,19 @@
 package com.avalutions.lou.manager.android.adapters;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.avalutions.lou.manager.R;
-import com.avalutions.lou.manager.net.UltimaClient;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.avalutions.lou.manager.R;
+import com.avalutions.lou.manager.net.UltimaClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class TroopAdapter  extends ArrayAdapter<JSONObject> {
-	
+public class TroopAdapter extends ArrayAdapter<JSONObject> {
+
     private final Activity context;
     private final JSONObject[] trades;
 

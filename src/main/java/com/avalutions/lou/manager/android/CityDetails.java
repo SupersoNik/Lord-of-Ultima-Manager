@@ -1,16 +1,8 @@
 package com.avalutions.lou.manager.android;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TabHost.TabSpec;
-import android.widget.TextView;
 import com.actionbarsherlock.view.MenuItem;
 import com.avalutions.lou.manager.R;
 import com.avalutions.lou.manager.net.Session;
@@ -18,6 +10,9 @@ import com.avalutions.lou.manager.net.commands.responses.poll.City;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.viewpagerindicator.TitlePageIndicator;
 import roboguice.inject.InjectView;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 
 public class CityDetails extends RoboSherlockFragmentActivity {
 
@@ -29,10 +24,10 @@ public class CityDetails extends RoboSherlockFragmentActivity {
 
     private City city;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.citydetails);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -40,11 +35,11 @@ public class CityDetails extends RoboSherlockFragmentActivity {
 
         setTitle(city.name);
 
-//        pager.setAdapter(new CityPagerAdapter(getResources(), city, getSupportFragmentManager()));
+        pager.setAdapter(new CityPagerAdapter(getSupportFragmentManager()));
 
-//        indicator.setViewPager(pager);
-//        pager.setCurrentItem(1);
-	}
+        indicator.setViewPager(pager);
+        pager.setCurrentItem(0);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

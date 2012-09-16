@@ -12,7 +12,7 @@ import com.avalutions.lou.manager.android.adapters.SessionAdapter;
 import com.avalutions.lou.manager.net.Session;
 
 public class SessionListing extends ListActivity {
-    private AsyncTask<Session, Void, Void> activationTask = new AsyncTask<Session, Void, Void>() {
+    private class ActivationTask extends AsyncTask<Session, Void, Void> {
         private ProgressDialog progressDialog;
 
         @Override
@@ -28,30 +28,34 @@ public class SessionListing extends ListActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if(progressDialog.isShowing()) {
+            if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
 
             Intent intent = new Intent(SessionListing.this, CityListing.class);
             SessionListing.this.startActivity(intent);
         }
-    };
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    }
+
+    ;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.world_list);
 
-		SessionAdapter adapter = new SessionAdapter(this, Session.getSessions());
-		setListAdapter(adapter);
-	}
-	
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-	    super.onListItemClick(l, v, position, id);
+        setTitle("My Games");
 
-	    Session session = (Session)this.getListAdapter().getItem(position);
-        activationTask.execute(session);
-	}
+        SessionAdapter adapter = new SessionAdapter(this, Session.getSessions());
+        setListAdapter(adapter);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        Session session = (Session) this.getListAdapter().getItem(position);
+        new ActivationTask().execute(session);
+    }
 
 }

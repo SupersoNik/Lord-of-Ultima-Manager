@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <TextView android:id="@+id/type" android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="Wood" android:textStyle="bold" android:textSize="18sp"/>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TextView android:id="@+id/current" android:layout_width="wrap_content" android:layout_marginLeft="5dp"
+                  android:layout_height="wrap_content" android:text="10,000"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/"/>
+        <TextView android:id="@+id/capacity" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="80,000"/>
+        <TextView android:id="@+id/increase" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginLeft="5dp" android:text="88.8"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/hr"/>
+    </LinearLayout>
+</LinearLayout>
