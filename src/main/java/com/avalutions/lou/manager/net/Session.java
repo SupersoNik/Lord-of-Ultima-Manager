@@ -1,8 +1,8 @@
 package com.avalutions.lou.manager.net;
 
-import com.avalutions.lou.manager.models.World;
 import com.avalutions.lou.manager.net.commands.Reset;
 import com.avalutions.lou.manager.net.commands.responses.ResetResponse;
+import com.avalutions.lou.manager.net.data.World;
 import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,9 +30,11 @@ public class Session {
     public static Session[] getSessions() {
         return sessions;
     }
+
     public static Session getActive() {
         return activeSession;
     }
+
     public static boolean login(String username, String password) {
         //authentication block:
         List<BasicNameValuePair> nvps = new ArrayList<BasicNameValuePair>();
@@ -49,11 +51,9 @@ public class Session {
         Pattern worldPattern = Pattern.compile("World (\\d+) \\((.*)\\)");
         Matcher matcher, worldMatcher;
         List<Session> sessionList = new ArrayList<Session>();
-        for(Element element : forms)
-        {
+        for (Element element : forms) {
             matcher = pattern.matcher(element.attr("action"));
-            if(matcher.matches())
-            {
+            if (matcher.matches()) {
                 Element input = element.select("input[type=hidden]").first();
                 String sessionId = input.attr("value");
                 Session session = new Session(sessionId);
@@ -91,7 +91,11 @@ public class Session {
         ResetResponse response = reset.run();
         sessionId = response.i;
 
-        if(activeSession != null) {
+//        InputStream is = UltimaClient.getInstance().getStream("http://prodgame" + game + ".lordofultima.com/" + instance + "/367836/data_en.html");
+//        DataRetriever retriever = new DataRetriever();
+//        world.setLookups(retriever.parse(is));
+
+        if (activeSession != null) {
             activeSession.deactivate();
         }
         activeSession = this;

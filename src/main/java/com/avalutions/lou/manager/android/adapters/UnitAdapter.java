@@ -2,7 +2,9 @@ package com.avalutions.lou.manager.android.adapters;
 
 import android.view.LayoutInflater;
 import com.avalutions.lou.manager.R;
+import com.avalutions.lou.manager.android.converters.Converter;
 import com.avalutions.lou.manager.net.commands.responses.poll.Unit;
+import com.avalutions.lou.manager.net.data.lookups.Lookup;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public class UnitAdapter extends SingleTypeAdapter<Unit> {
 
     @Override
     protected void update(int position, Unit item) {
-        setText(0, lookup.lookup(item.type));
+        setText(0, lookup.lookup(item.type).toString());
         setNumber(1, item.maximum);
         setNumber(2, (long) converter.convert(item.increase));
         setNumber(3, item.amount);

@@ -43,7 +43,7 @@ public class UltimaClient {
 
     public static JSONObject[] getJSONObjectArray(JSONArray values) throws JSONException {
         JSONObject[] result = new JSONObject[values.length()];
-        for(int i = 0; i < values.length(); i++) {
+        for (int i = 0; i < values.length(); i++) {
             result[i] = values.getJSONObject(i);
         }
         return result;
@@ -69,9 +69,25 @@ public class UltimaClient {
                 parameters, schemeRegistry);
         _client = new DefaultHttpClient(manager, parameters);
     }
-    
+
     private String getURL(Session session, String action) {
         return "http://prodgame" + session.game + ".lordofultima.com/" + session.instance + "/Presentation/Service.svc/ajaxEndpoint/" + action;
+    }
+
+    public InputStream getStream(String url) {
+        final HttpGet httpget = new HttpGet(url);
+
+        // sending the request and retrieving the response:
+        HttpResponse response = null;
+        try {
+            response = _client.execute(httpget, _context);
+            return response.getEntity().getContent();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String get(String url) {

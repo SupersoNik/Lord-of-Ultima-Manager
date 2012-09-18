@@ -43,5 +43,5 @@ public class City {
     @JsonProperty("ti")
     public List<Merchant> incomingTrades;
     @JsonProperty("rs")
-    public List<RecruitmentSpeed> rs;
+    public List<RecruitmentSpeed> recruitmentSpeeds;
 }

@@ -75,6 +75,11 @@
             <version>0.4</version>
             <type>apklib</type>
         </dependency>
+        <dependency>
+            <groupId>com.github.kevinsawicki</groupId>
+            <artifactId>http-request</artifactId>
+            <version>2.2</version>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>

@@ -3,6 +3,7 @@ package com.avalutions.lou.manager.android.adapters;
 import android.view.LayoutInflater;
 import com.avalutions.lou.manager.R;
 import com.avalutions.lou.manager.net.commands.responses.poll.UnitGroup;
+import com.avalutions.lou.manager.net.data.lookups.Lookup;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class UnitGroupAdapter extends SingleTypeAdapter<UnitGroup> {
 
     @Override
     protected void update(int position, UnitGroup item) {
-        setText(0, lookup.lookup(item.type));
+        setText(0, lookup.lookup(item.type).toString());
         setNumber(1, item.count);
         setNumber(2, item.totalCount);
     }

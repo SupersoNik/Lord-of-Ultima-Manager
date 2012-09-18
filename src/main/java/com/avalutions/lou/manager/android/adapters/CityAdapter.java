@@ -14,15 +14,15 @@ public class CityAdapter extends ArrayAdapter<PlayerCity> {
     private final PlayerCity[] cities;
 
     public CityAdapter(Activity context, PlayerCity[] cities) {
-        super(context, R.layout.world_item, cities);
+        super(context, R.layout.world_list_item, cities);
         this.context = context;
         this.cities = cities;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.cityitem, null, true);
-        
+        View rowView = inflater.inflate(R.layout.city_list_item, null, true);
+
         TextView textView = (TextView) rowView.findViewById(R.id.txtCityName);
         textView.setText(cities[position].name);
 
