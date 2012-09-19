@@ -2,6 +2,7 @@ package com.avalutions.lou.manager.net;
 
 import com.avalutions.lou.manager.net.commands.Reset;
 import com.avalutions.lou.manager.net.commands.responses.ResetResponse;
+import com.avalutions.lou.manager.net.data.DataRetriever;
 import com.avalutions.lou.manager.net.data.World;
 import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
@@ -9,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -91,9 +93,18 @@ public class Session {
         ResetResponse response = reset.run();
         sessionId = response.i;
 
-//        InputStream is = UltimaClient.getInstance().getStream("http://prodgame" + game + ".lordofultima.com/" + instance + "/367836/data_en.html");
-//        DataRetriever retriever = new DataRetriever();
-//        world.setLookups(retriever.parse(is));
+        String otherStuff = null;
+        String otherData = UltimaClient.getInstance().get("http://prodgame" + game + ".lordofultima.com/" + instance + "/index.aspx");
+        Pattern otherPattern = Pattern.compile("var PerforceChangelist = ([0-9]+)\\;");
+        Matcher matcher = otherPattern.matcher(otherData);
+        if (matcher.find()) {
+            otherStuff = matcher.group(1);
+        }
+
+        //get id from http://prodgame19.lordofultima.com/185/index.aspx  line like this "var PerforceChangelist = 371625;;"
+        InputStream is = UltimaClient.getInstance().getStream("http://prodgame" + game + ".lordofultima.com/" + instance + "/" + otherStuff + "/data_en.html");
+        DataRetriever retriever = new DataRetriever();
+        world.setLookups(retriever.parse(is));
 
         if (activeSession != null) {
             activeSession.deactivate();

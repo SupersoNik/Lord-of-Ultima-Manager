@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
  * Summary:
  */
 public class DataRetriever {
-    private static final Pattern startPattern = Pattern.compile("^.*GAMEDATA=(\\{.*)\"\\);</script>$");
-    private static final Pattern contentPattern = Pattern.compile("<script type=\"text/javascript\">s\\(\"(.*)\"\\);</script>");
-    private static final Pattern endPattern = Pattern.compile("<script type=\"text/javascript\">s\\(\"(.*});if.*");
+    private Pattern startPattern = Pattern.compile("^.*GAMEDATA=(\\{.*)\"\\);</script>$");
+    private Pattern contentPattern = Pattern.compile("<script type=\"text/javascript\">s\\(\"(.*)\"\\);</script>");
+    private Pattern endPattern = Pattern.compile("<script type=\"text/javascript\">s\\(\"(.*\\});if.*");
     private final ObjectMapper mapper = new ObjectMapper();
 
     public Map<String, Lookup> parse(InputStream inputStream) {
